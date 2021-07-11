@@ -1,0 +1,61 @@
+.avatar {
+    height: 200px;
+    background-image: url('./images/homeBackground5.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 40px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.avatar img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 100px;
+    position: absolute;
+    bottom: -110px;
+    left: 60px;
+}
+
+.avatar-info {
+    position: absolute;
+    bottom: -70px;
+    left: 250px;
+    display: flex;
+}
+
+.avatar-info h4{
+    margin: 0;
+    font-weight: 600;
+}
+
+.avatar-info p{
+    opacity: .7;
+    margin: 0;
+}
+
+.avatar-info div {
+    margin-right: 20px
+}
+
+.score {
+    padding-left: 25px;
+    border-left: 1px solid #c7c7c7;
+    display: flex;
+    align-items: center;
+}
+
+.score h3 {
+    font-size: 40px;
+    font-weight: 600;
+    opacity: .8;
+    margin: 0;
+}
+
+.name-info {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}

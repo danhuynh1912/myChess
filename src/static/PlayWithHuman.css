@@ -1,0 +1,119 @@
+.humanplay, .aiplay {
+    padding-top: 25px
+}
+
+.back {
+    padding: 10px;
+    background: #fdf9f2;
+    border-radius: 10px;
+    width: 40px;
+    margin-right: 15px;
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 12%);
+}
+
+.time {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+    padding: 15px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.your-time {
+    background: #e6ecf0;
+}
+
+.opponent-time h5{
+    color: #b98f86;
+}
+
+.your-time h5{
+    color: #849cad;
+}
+
+.opponent-time {
+    background: #feefec;
+}
+
+.time p {
+    font-weight: 600;
+    opacity: .5;
+    font-size: 25px;
+}
+
+.time span {
+    opacity: .5;
+}
+
+.time h5 {
+    font-weight: 600;
+    font-size: 35px;
+    margin: 0;
+}
+
+.time img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+.time-count {
+    position: absolute;
+    right: 15px;
+}
+
+.center-board {
+    text-align: center;
+}
+
+.setup-game {
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 12%);
+    border-radius: 5px;
+    background: white;
+    height: 100%;
+    padding: 15px
+}
+
+.play-button {
+    width: 100%;
+    border: none;
+    background: #b98f86;
+    color: white;
+    height: 50px;
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 12%);
+    border-radius: 90px;
+    margin-bottom: 20px;
+}
+
+.custom-game {
+    width: 100%;
+    border: none;
+    background: #859cac;
+    color: white;
+    height: 50px;
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 12%);
+    border-radius: 90px;
+}
+
+.three-option {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 20px 30px 20px 30px
+}
+
+.anoption {
+    margin: 12px 0 12px 0;
+}
+
+.anoption img {
+    margin-right: 15px;
+    opacity: .6;
+}
+
+.anoption a {
+    color: black;
+    text-decoration: none;
+}

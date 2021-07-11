@@ -1,0 +1,50 @@
+.articles-list {
+    padding-top: 25px
+}
+
+.main-articles-list, .related-list {
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 5%);
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 25px
+}
+
+.main-articles-list img {
+    width: 100%
+}
+
+.title-info p{
+    opacity: .5;
+    font-size: 15px;
+}
+
+.title-info h4{
+    font-size: 29px;
+    font-weight: 600;
+}
+
+.article-item {
+    margin-top: 40px !important;
+}
+
+.article-title {
+    font-size: 22px !important;
+}
+
+.article-item a, .first-title a {
+    color: black
+}
+
+.article-rightcontent {
+    height: 100vh;
+    position: sticky;
+    top: 25px;
+}
+
+@media (max-width: 2000px) and (min-width: 1700px) {
+    .title-info h4{
+        font-size: 43px;
+        font-weight: 600;
+    }
+}

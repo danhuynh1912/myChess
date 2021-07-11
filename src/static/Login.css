@@ -1,0 +1,65 @@
+.login {
+    width: 50%;
+    margin: 100px auto;
+    background: white;
+    box-shadow: 0 10.5px 5.4px -26px rgba(0, 0, 0, 0.19), 0 18.5px 9px -26px rgba(0, 0, 0, 0.212), 0 25.9px 12.2px -26px rgba(0, 0, 0, 0.209), 0 34.5px 17.1px -26px rgba(0, 0, 0, 0.198), 0 47.3px 26.8px -26px rgba(0, 0, 0, 0.187), 0 70px 46px -26px rgba(0, 0, 0, 0.19);
+}
+
+.login-img {
+    height: 600px;
+    background-image: url('./images/login1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.form-login {
+    padding: 90px 70px
+}
+
+.form-login h1 {
+    font-weight: 600;
+}
+
+.form input {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 25px;
+    border: 1px solid #a3a3a3;
+    padding-left: 10px;
+}
+
+.form {
+    padding: 20px 0;
+    border-top: 1px solid #bebebe;
+}
+
+.form p {
+    margin: 0;
+}
+
+.form button {
+    width: 100%;
+    border: none;
+    background: #a0685c;
+    color: white;
+    height: 50px;
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 12%);
+    margin-bottom: 25px;
+}
+
+.form span {
+    color: #a0685c
+}
+
+@media screen and (max-width: 1600px) {
+    .login {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 1349px) {
+    .login {
+        width: 75%;
+    }
+}

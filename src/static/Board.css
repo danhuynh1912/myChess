@@ -1,0 +1,41 @@
+.thefile {
+    height: 90px;
+}
+
+.board {
+    transition: transform 2s;
+}
+
+.rotate {
+    transform: rotateZ(180deg); 
+}
+
+@media screen and (min-width: 1750px) {
+    .thefile {
+        height: 110px;
+    }
+
+    .square {
+        width: 110px;
+    }
+}
+
+@media (max-width: 1749px) and (min-width: 1600px) {
+    .thefile {
+        height: 95px;
+    }
+
+    .square {
+        width: 95px;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .thefile {
+        height: 80px;
+    }
+
+    .square {
+        width: 80px;
+    }
+}

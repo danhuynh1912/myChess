@@ -1,0 +1,12 @@
+export const ROOK_B = 'ROOK_B';
+export const ROOK_W = 'ROOK_W';
+export const KNIGHT_B = 'KNIGHT_B';
+export const KNIGHT_W = 'KNIGHT_W';
+export const BISHOP_B = 'BISHOP_B';
+export const BISHOP_W = 'BISHOP_W';
+export const PAWN_B = 'PAWN_B';
+export const PAWN_W = 'PAWN_W';
+export const KING_B = 'KING_B';
+export const KING_W = 'KING_W';
+export const QUEEN_B = 'QUEEN_B';
+export const QUEEN_W = 'QUEEN_W';

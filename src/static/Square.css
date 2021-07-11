@@ -1,0 +1,40 @@
+.square {
+    width: 90px;
+    height: 100%;
+    border: none;
+}
+
+.square:focus {
+    outline: none;
+}
+
+.black {
+    background: #ababab;
+}
+
+.white {
+    background: #dcdcdc;
+}
+
+.imgButton {
+    width: 100%;
+    text-align: center;
+    transition: transform 2s;
+    vertical-align: baseline;
+}
+
+.possible {
+    vertical-align: baseline;
+}
+
+.rotate {
+    transform: rotateZ(180deg);
+}
+
+.choosing {
+    background: rgb(44, 44, 44);
+}
+
+.possibletomove, .possible {
+    opacity: 0.3;
+}

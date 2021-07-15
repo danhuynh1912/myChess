@@ -6,7 +6,7 @@
 }
 
 .login-img {
-    height: 600px;
+    height: 790px;
     background-image: url('./images/login1.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -48,8 +48,37 @@
     margin-bottom: 25px;
 }
 
+.social {
+    display: block;
+    padding-left: 80px;
+}
+
+.social a {
+    display: flex;
+}
+
+.social a p {
+    margin-top: 11px;
+}
+
+.social a img {
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+}
+
 .form span {
     color: #a0685c
+}
+
+.form div {
+    display: flex;
+}
+
+.form div input {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
 }
 
 @media screen and (max-width: 1600px) {

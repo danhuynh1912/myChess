@@ -6,7 +6,6 @@ import github from '../static/images/github.svg';
 import twitter from '../static/images/twitter.svg';
 
 export default class ContactUs extends Component {
-
     render() {
         return <div className='contact'>
             <h5>Contact</h5>
@@ -16,7 +15,7 @@ export default class ContactUs extends Component {
                 <a href='#a'><img src={github} alt=""/></a>
                 <a href='#a'><img src={twitter} alt=""/></a>
             </div>
-                
+
         </div>
     }
 }

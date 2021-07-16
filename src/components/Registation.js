@@ -27,7 +27,7 @@ export default class Registation extends Component {
                             <p>Full Name</p>
                             <input type="text" placeholder="your name" />
                             <Link to="/login">
-                                <button >Registation</button>
+                                <button className="regis-button">Registation</button>
                             </Link>
                         </div>
                     </div>

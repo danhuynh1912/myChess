@@ -9,6 +9,7 @@ import {
 import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
+import Blog from './Blog';
 import Lesson from './Lesson';
 
 // container
@@ -35,6 +36,9 @@ export default class Home extends Component {
                     </Route>
                     <Route path="/gamewithai">
                         <PlayWithAiContainer />
+                    </Route>
+                    <Route path="/blog">
+                        <Blog/>
                     </Route>
                     <Route path="/">
                         <HomePage />

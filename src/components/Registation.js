@@ -31,8 +31,9 @@ export default class Registation extends Component {
                             </Link>
                         </div>
                     </div>
+                    <div className="col-6 login-img"></div>
                 </div>
-            </div>
+        </div>
         </div>
     }
 }

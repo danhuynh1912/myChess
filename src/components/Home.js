@@ -9,7 +9,11 @@ import {
 import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
+<<<<<<< HEAD
 import Blog from './Blog';
+=======
+import Lesson from './Lesson';
+>>>>>>> 078cf9d85c6c2c129f3a11e55a0b510b6e66628d
 
 // container
 
@@ -24,7 +28,14 @@ export default class Home extends Component {
             </div>
             <div className='col-10'>
                 <Switch>
+<<<<<<< HEAD
                     {/* <Route path="/playwithhuman">
+=======
+                    <Route path="/lesson">
+                        <Lesson />
+                    </Route>
+                    <Route path="/playwithhuman">
+>>>>>>> 078cf9d85c6c2c129f3a11e55a0b510b6e66628d
                         <PlayWithHuman />
                     </Route> */}
                     <Route path="/playwithai">

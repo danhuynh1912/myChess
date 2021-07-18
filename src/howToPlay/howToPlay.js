@@ -37,14 +37,14 @@ export const pieceMove = (x, y, curX, curY, pie, allSquare) => {
         }
         case KNIGHT_B:
         case KNIGHT_W: {
-            possiblePoints.push({ a: curX + 2, b: curY + 1 });
-            possiblePoints.push({ a: curX + 2, b: curY - 1 });
-            possiblePoints.push({ a: curX - 2, b: curY + 1 });
-            possiblePoints.push({ a: curX - 2, b: curY - 1 });
-            possiblePoints.push({ a: curX + 1, b: curY + 2 });
-            possiblePoints.push({ a: curX - 1, b: curY + 2 });
-            possiblePoints.push({ a: curX + 1, b: curY - 2 });
-            possiblePoints.push({ a: curX - 1, b: curY - 2 });
+            if(allSquare[curX + 2] !== undefined && allSquare[curX + 2][curY + 1] !== undefined && allSquare[curX + 2][curY + 1].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX + 2, b: curY + 1 });
+            if(allSquare[curX + 2] !== undefined && allSquare[curX + 2][curY - 1] !== undefined && allSquare[curX + 2][curY - 1].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX + 2, b: curY - 1 });
+            if(allSquare[curX - 2] !== undefined && allSquare[curX - 2][curY + 1] !== undefined && allSquare[curX - 2][curY + 1].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX - 2, b: curY + 1 });
+            if(allSquare[curX - 2] !== undefined && allSquare[curX - 2][curY - 1] !== undefined && allSquare[curX - 2][curY - 1].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX - 2, b: curY - 1 });
+            if(allSquare[curX + 1] !== undefined && allSquare[curX + 1][curY + 2] !== undefined && allSquare[curX + 1][curY + 2].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX + 1, b: curY + 2 });
+            if(allSquare[curX - 1] !== undefined && allSquare[curX - 1][curY + 2] !== undefined && allSquare[curX - 1][curY + 2].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX - 1, b: curY + 2 });
+            if(allSquare[curX + 1] !== undefined && allSquare[curX + 1][curY - 2] !== undefined && allSquare[curX + 1][curY - 2].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX + 1, b: curY - 2 });
+            if(allSquare[curX - 1] !== undefined && allSquare[curX - 1][curY - 2] !== undefined && allSquare[curX - 1][curY - 2].pieceColor !== allSquare[curX][curY].pieceColor) possiblePoints.push({ a: curX - 1, b: curY - 2 });
             break;
         }
         case BISHOP_B:

@@ -41,6 +41,12 @@ export default class Nav extends Component {
                             <span>Play with AI</span>
                         </Link>
                     </li>
+                    <li>
+                        <Link to="/lesson">
+                            <img src={logout} alt=""/>
+                            <span>Lesson</span>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
             <nav>
@@ -64,6 +70,7 @@ export default class Nav extends Component {
                             <span>Sign out</span>
                         </Link>
                     </li>
+                    
                 </ul>
             </nav>
         </div>

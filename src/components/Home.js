@@ -11,6 +11,7 @@ import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
 import Blog from './Blog';
 import Lesson from './Lesson';
+import ArticlesList from './ArticlesList';
 
 // container
 
@@ -25,6 +26,9 @@ export default class Home extends Component {
             </div>
             <div className='col-10'>
                 <Switch>
+                <Route path="/ArticlesList">
+                        <ArticlesList />
+                    </Route>
                     <Route path="/lesson">
                         <Lesson />
                     </Route>
@@ -43,6 +47,7 @@ export default class Home extends Component {
                     <Route path="/">
                         <HomePage />
                     </Route>
+
                     
                 </Switch>
             </div>

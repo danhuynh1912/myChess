@@ -9,7 +9,7 @@ import {
 import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
-
+import Blog from './Blog';
 
 // container
 
@@ -24,18 +24,22 @@ export default class Home extends Component {
             </div>
             <div className='col-10'>
                 <Switch>
-                    <Route path="/playwithhuman">
+                    {/* <Route path="/playwithhuman">
                         <PlayWithHuman />
-                    </Route>
+                    </Route> */}
                     <Route path="/playwithai">
                         <ChoseLevelAiContainer />
                     </Route>
                     <Route path="/gamewithai">
                         <PlayWithAiContainer />
                     </Route>
+                    <Route path="/blog">
+                        <Blog/>
+                    </Route>
                     <Route path="/">
                         <HomePage />
                     </Route>
+                    
                 </Switch>
             </div>
         </div>

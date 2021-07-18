@@ -5,8 +5,6 @@ import '../static/Nav.css';
 import homeHome from '../static/images/homeHome.svg';
 import humanHome from '../static/images/humanHome.svg';
 import aiHome from '../static/images/aiHome.svg';
-import lessonHome from '../static/images/lessonHome.svg';
-import article from '../static/images/article.svg';
 import seehistory from '../static/images/seehistory.svg';
 import logout from '../static/images/logout.svg';
 

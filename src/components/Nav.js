@@ -42,6 +42,12 @@ export default class Nav extends Component {
                         </Link>
                     </li>
                     <li>
+                        <Link to="/blog">
+                            <img src={aiHome} alt="" />
+                            <span>Blog</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link to="/lesson">
                             <img src={logout} alt=""/>
                             <span>Lesson</span>

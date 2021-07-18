@@ -9,7 +9,7 @@ import {
 import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
-
+import Lesson from './Lesson';
 
 // container
 
@@ -24,6 +24,9 @@ export default class Home extends Component {
             </div>
             <div className='col-10'>
                 <Switch>
+                    <Route path="/lesson">
+                        <Lesson />
+                    </Route>
                     <Route path="/playwithhuman">
                         <PlayWithHuman />
                     </Route>
@@ -36,6 +39,7 @@ export default class Home extends Component {
                     <Route path="/">
                         <HomePage />
                     </Route>
+                    
                 </Switch>
             </div>
         </div>

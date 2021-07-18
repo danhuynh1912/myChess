@@ -87,7 +87,7 @@ export default class Square extends Component {
 
         return (
             <button onClick={choosePieceToMove} className={buttonClass}>
-                {empty ? '' : <img className={whiteTurn? "imgButton":"imgButton rotate"} src={pieceImg} alt="square" />}
+                {empty ? '' : <img className="imgButton" src={pieceImg} alt="square" />}
                 { item.possibleToMove && !item.currentPiece && <img className='possible' src={possibleMove} width='23px' height='100%' alt='possible' /> }
             </button>
         )

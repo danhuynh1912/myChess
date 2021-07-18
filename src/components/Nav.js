@@ -53,6 +53,12 @@ export default class Nav extends Component {
                             <span>Lesson</span>
                         </Link>
                     </li>
+                    <li>
+                        <Link to="/ArticlesList">
+                            <img src={logout} alt=""/>
+                            <span>ArticlesList</span>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
             <nav>

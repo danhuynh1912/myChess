@@ -15,7 +15,10 @@ export default class Board extends Component {
             allSquare: [],
             willMove: { piece: '', position: '', ready: false, color: '', curX: '', curY: '' },
             whiteTurn: true,
-            check: ''
+            check: '',
+            attackingPieces: [],
+            kingControlledSquares: [],
+
         }
     }
 
@@ -123,20 +126,20 @@ export default class Board extends Component {
     }
 
     componentDidUpdate() {
-        switch(this.checkIfCheckKing()) {
-            case "You": {
-                setTimeout(() => {
-                    alert("You are checked");
-                }, 1000);
-                break
-            }
-            case "Com": {
-                setTimeout(() => {
-                    alert("Computer are checked");
-                }, 1000);
-                break;
-            }
-        }
+        // switch(this.checkIfCheckKing()) {
+        //     case "You": {
+        //         setTimeout(() => {
+        //             alert("You are checked");
+        //         }, 1000);
+        //         break
+        //     }
+        //     case "Com": {
+        //         setTimeout(() => {
+        //             alert("Computer are checked");
+        //         }, 1000);
+        //         break;
+        //     }
+        // }
     }
 
     defaultPossibleToMove() {
@@ -190,7 +193,7 @@ export default class Board extends Component {
     }
 
     randomAI() {
-        const { willMove, allSquare, whiteTurn } = this.state;
+        const { willMove, allSquare, whiteTurn, attackingPieces, kingControlledSquares } = this.state;
         let possibleMovesRandomPiece = [];
         let AIPieces = [];
         let AIPossiblePiecesToMove = [];
@@ -211,10 +214,11 @@ export default class Board extends Component {
             this.movePiece(randomMove.x, randomMove.y, randomPiece.x, randomPiece.y, randomPiece.currentPiece, randomPiece.pieceColor);
         }
         else {
-            // alert("Computer Checked!!!");
-            this.setState({
-                whiteTurn: !whiteTurn
-            })
+            console.log("ATTACKKKKKK");
+            console.log(attackingPieces);
+            console.log("DISTANCE");
+            console.log(kingControlledSquares);
+            this.kingEscape();
         }
 
     }
@@ -238,31 +242,62 @@ export default class Board extends Component {
         for (let i = 0; i < allSquare.length; i++) {
             for (let j = 0; j < allSquare[i].length; j++) {
                 if ((allSquare[i][j].pieceColor === WHITE_PIECE && !whiteTurn) || (allSquare[i][j].pieceColor === BLACK_PIECE && whiteTurn)) {
+                    let attackPiece = allSquare[i][j];
+                    let controlledSquares = [];
                     for (let _i = 0; _i < allSquare.length; _i++) {
                         for (let _j = 0; _j < allSquare[_i].length; _j++) {
                             if (pieceMove(_i, _j, allSquare[i][j].x, allSquare[i][j].y, allSquare[i][j].currentPiece, allSquare)) {
-                                allControlledSquares.push(allSquare[_i][_j]);
+                                controlledSquares.push(allSquare[_i][_j]);
                             }
                         }
                     }
+                    allControlledSquares.push({
+                        attackPiece: attackPiece,
+                        controlledSquares: controlledSquares
+                    })
+                }
+            }
+        }
+        console.log("<><><>><>><><><><");
+        console.log(allControlledSquares);
+        return allControlledSquares;
+    }
+
+    changeAttackingPieces(pieces) {
+        this.setState({
+            attackingPieces: pieces
+        })
+    }
+
+    emptyAttackingPiecesAndKingControlledSquares() {
+        const { attackingPieces, kingControlledSquares } = this.state;
+        for (let i = 0; i < attackingPieces.length; i++) {
+            attackingPieces.pop(0);
+        }
+        for (let i = 0; i < kingControlledSquares.length; i++) {
+            kingControlledSquares.pop(0);
+        }
+    }
+
+    checkIfItemControlled(king) {
+        const { attackingPieces, kingControlledSquares } = this.state;
+        this.emptyAttackingPiecesAndKingControlledSquares();
+        for (let i = 0; i < this.controlledSquaresList().length; i++) {
+            for(let j = 0; j < this.controlledSquaresList()[i].controlledSquares.length; j++) {
+                if(king.x === this.controlledSquaresList()[i].controlledSquares[j].x && king.y === this.controlledSquaresList()[i].controlledSquares[j].y) {
+                    attackingPieces.push(this.controlledSquaresList()[i].attackPiece);
+                    this.changeAttackingPieces(attackingPieces);
+                    this.getDistanceFromAttackToKing(king, attackingPieces);
+                    return true;
                 }
             }
         }
         
-        return allControlledSquares;
-    }
-
-    checkIfItemControlled(king) {
-        for (let i = 0; i < this.controlledSquaresList().length; i++) {
-            if(king.x === this.controlledSquaresList()[i].x && king.y === this.controlledSquaresList()[i].y) {
-                return true;
-            }
-        }
         return false;
     }
 
     checkIfCheckKing() {
-        const { allSquare, whiteTurn } = this.state;
+        const { allSquare, whiteTurn, attackingPieces } = this.state;
         for (let i = 0; i < allSquare.length; i++) {
             for (let j = 0; j < allSquare[i].length; j++) {
                 if (allSquare[i][j].currentPiece === KING_W && whiteTurn && this.checkIfItemControlled(allSquare[i][j])) {
@@ -270,12 +305,125 @@ export default class Board extends Component {
                 }
                 else {
                     if(allSquare[i][j].currentPiece === KING_B && !whiteTurn && this.checkIfItemControlled(allSquare[i][j])) {
+                        
                         return "Com";
                     }
                 }
             }
         }
         return "Not";
+    }
+
+    getDistanceFromAttackToKing(king, attack) {
+        const { allSquare, kingControlledSquares } = this.state;
+        for(let j=0; j<attack.length; j++) {
+            if(attack[j].currentPiece.indexOf("ROOK") !== -1) {
+                if(king.x === attack[j].x) {
+                    if(king.y > attack[j].y) {
+                        for(let i=attack[j].y; i<=7; i++) {
+                            kingControlledSquares.push({
+                                attack: attack[j],
+                                item: allSquare[king.x][i]
+                            })
+                        }
+                    }
+                    else {
+                        for(let i=attack[j].y; i>=0; i--) {
+                            kingControlledSquares.push({
+                                attack: attack[j],
+                                item: allSquare[king.x][i]
+                            })
+                        }
+                    }
+                }
+                if(king.y === attack[j].y) {
+                    if(king.x > attack[j].x) {
+                        for(let i=attack[j].x; i<=7; i++) {
+                            kingControlledSquares.push({
+                                attack: attack[j],
+                                item: allSquare[i][king.y]
+                            })
+                        }
+                    }
+                    else {
+                        for(let i=attack[j].x; i>=0; i--) {
+                            kingControlledSquares.push({
+                                attack: attack[j],
+                                item: allSquare[i][king.y]
+                            })
+                        }
+                    }
+                }
+            }
+        }
+        this.setState({
+            kingControlledSquares: kingControlledSquares
+        })
+    }
+
+    moveToBlock() {
+        const { allSquare, whiteTurn, check, kingControlledSquares } = this.state;
+        let allMoveToBlock = [];
+        if(check !== "Not" && !whiteTurn) {
+            for (let i = 0; i < allSquare.length; i++) {
+                for (let j = 0; j < allSquare[i].length; j++) {
+                    if ((allSquare[i][j].pieceColor === BLACK_PIECE && !whiteTurn) || (allSquare[i][j].pieceColor === WHITE_PIECE && whiteTurn)) {
+                        if(allSquare[i][j].currentPiece.indexOf("KING") === -1) {
+                            let pieceToBlock = allSquare[i][j];
+                            for (let _i = 0; _i < allSquare.length; _i++) {
+                                for (let _j = 0; _j < allSquare[_i].length; _j++) {
+                                    if (pieceMove(_i, _j, allSquare[i][j].x, allSquare[i][j].y, allSquare[i][j].currentPiece, allSquare)) {
+                                        for(let k = 0; k<kingControlledSquares.length; k++) {
+                                            if(kingControlledSquares[k].item.currentPiece.indexOf("KING") !== -1) break;
+                                            else {
+                                                if(_i === kingControlledSquares[k].item.x && _j === kingControlledSquares[k].item.y) {
+                                                    console.log("TESTTTTTTTTT123 " + _i + ", " + _j);
+                                                    allMoveToBlock.push({
+                                                        pieceToBlock: pieceToBlock,
+                                                        move: allSquare[_i][_j]
+                                                    })
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            let pieceToBlock = allSquare[i][j];
+                            for (let _i = 0; _i < allSquare.length; _i++) {
+                                for (let _j = 0; _j < allSquare[_i].length; _j++) {
+                                    if (pieceMove(_i, _j, allSquare[i][j].x, allSquare[i][j].y, allSquare[i][j].currentPiece, allSquare)) {
+                                        let count = 0;
+                                        for(let k = 0; k<kingControlledSquares.length; k++) {
+                                            if(_i === kingControlledSquares[k].item.x && _j === kingControlledSquares[k].item.y) {
+                                                count++;
+                                            }
+                                        }
+                                        if(count === 0) {
+                                            allMoveToBlock.push({
+                                                pieceToBlock: pieceToBlock,
+                                                move: allSquare[_i][_j]
+                                            })
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        console.log("TESTTTTTTTTT");
+        console.log(allMoveToBlock);
+        console.log(allMoveToBlock[Math.floor(Math.random() * allMoveToBlock.length)]);
+        return allMoveToBlock;
+        // return allMoveToBlock[Math.floor(Math.random() * allMoveToBlock.length)];
+    }
+
+    kingEscape() {
+        let actionToBlock = this.moveToBlock()[Math.floor(Math.random() * this.moveToBlock().length)];
+        this.movePiece(actionToBlock.move.x, actionToBlock.move.y, actionToBlock.pieceToBlock.x, actionToBlock.pieceToBlock.y, actionToBlock.pieceToBlock.currentPiece, actionToBlock.pieceToBlock.pieceColor);
     }
 
     choosePieceToMove(pos, pie, pieColor, x, y) {

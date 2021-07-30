@@ -21,8 +21,15 @@ export default class Blog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            modal: false,
+            user: {
+                userId: 'danhuynh',
+                avt: avt,
+                userName: 'Huỳnh Ngọc Danh'
+            }
         }
+
+        this.textInputRef = React.createRef();
     }
 
     toggle = () => {
@@ -31,14 +38,22 @@ export default class Blog extends Component {
         })
     };
 
+    addBlogFunction = () => {
+        const { user } = this.state;
+        let content = this.textInputRef.current.value;
+        content? this.props.addBlog({ like: 0, comment: [], saved: 0, userId: user.userId, avt: user.avt, userName: user.userName, content: content }):alert('You have to say something!');
+        this.toggle();
+    } 
+
     render() {
-        const blogs = [
-            { like: 123, comment: [1, 2, 3, 4], saved: 10, userId: 'danhuynh', avt: avt, userName: 'Huỳnh Ngọc Danh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porta lorem mollis aliquam ut porttitor leo. Semper eget duis at tellus. Tortor id aliquet lectus proin nibh nisl condimentum.' },
-            { like: 56, comment: [1, 2], saved: 11, userId: 'ngocanh', avt: friend2, userName: 'Nguyễn Ngọc Anh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae suscipit tellus mauris a. Massa enim nec dui nunc mattis enim.' },
-            { like: 10, comment: [3, 4, 10, 5, 6, 6, 4], saved: 20, userId: 'ngocdung', avt: friend1, userName: 'Nguyễn Ngọc Dũng', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-            { like: 230, comment: [], saved: 2, userId: 'hieu123', avt: friend3, userName: 'Tống Quang Hiếu', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui sapien eget mi proin. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus. Tempor orci dapibus ultrices in iaculis nunc sed augue. Justo donec enim diam vulputate ut pharetra sit amet aliquam.' },
-            { like: 2, comment: [], saved: 1, userId: 'danhuynh', avt: avt, userName: 'Huỳnh Ngọc Danh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus eget nunc scelerisque viverra mauris in aliquam.' },
-        ]
+        // const blogs = [
+        //     { like: 123, comment: [1, 2, 3, 4], saved: 10, userId: 'danhuynh', avt: avt, userName: 'Huỳnh Ngọc Danh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porta lorem mollis aliquam ut porttitor leo. Semper eget duis at tellus. Tortor id aliquet lectus proin nibh nisl condimentum.' },
+        //     { like: 56, comment: [1, 2], saved: 11, userId: 'ngocanh', avt: friend2, userName: 'Nguyễn Ngọc Anh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae suscipit tellus mauris a. Massa enim nec dui nunc mattis enim.' },
+        //     { like: 10, comment: [3, 4, 10, 5, 6, 6, 4], saved: 20, userId: 'ngocdung', avt: friend1, userName: 'Nguyễn Ngọc Dũng', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+        //     { like: 230, comment: [], saved: 2, userId: 'hieu123', avt: friend3, userName: 'Tống Quang Hiếu', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui sapien eget mi proin. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus. Tempor orci dapibus ultrices in iaculis nunc sed augue. Justo donec enim diam vulputate ut pharetra sit amet aliquam.' },
+        //     { like: 2, comment: [], saved: 1, userId: 'danhuynh', avt: avt, userName: 'Huỳnh Ngọc Danh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus eget nunc scelerisque viverra mauris in aliquam.' },
+        // ]
+        const { blogList, addBlog } = this.props
         const { aiGames } = this.props;
         return <div className='aiplay'>
             <div className='row'>
@@ -50,12 +65,12 @@ export default class Blog extends Component {
                             <Modal isOpen={this.state.modal} toggle={this.toggle} >
                                 <ModalHeader>Create post</ModalHeader>
                                 <ModalBody>
-                                    <textarea className="textinput" rows="4" placeholder="What's on your mind, Danh?" >
+                                    <textarea ref={this.textInputRef} className="textinput" rows="4" placeholder="What's on your mind, Danh?" >
                                         
                                     </textarea>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button className="postbutton" color="primary" onClick={this.toggle}>Post</Button>{' '}
+                                    <Button className="postbutton" color="primary" onClick={this.addBlogFunction}>Post</Button>{' '}
                                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                                 </ModalFooter>
                             </Modal>
@@ -67,7 +82,7 @@ export default class Blog extends Component {
                             {/* <input type="text" placeholder="What's on your mind?" /> */}
                         </div>
                     </div>
-                    {blogs.length && blogs.map((item) => <div className="blog-list">
+                    {blogList.length>0 && blogList.map((item) => <div className="blog-list">
                         <div className="user-avt">
                             <img src={item.avt} alt="avt" />
                             <div className="user-name">

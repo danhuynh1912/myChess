@@ -10,6 +10,7 @@ import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
 import Blog from './Blog';
+import BlogContainer from '../container/BlogContainer';
 import Lesson from './Lesson';
 import ArticlesList from './ArticlesList';
 
@@ -42,7 +43,7 @@ export default class Home extends Component {
                         <PlayWithAiContainer />
                     </Route>
                     <Route path="/blog">
-                        <Blog/>
+                        <BlogContainer/>
                     </Route>
                     <Route path="/">
                         <HomePage />

@@ -18,7 +18,7 @@ import k_w from '../static/pieceImg/k_w.png';
 
 export default class Square extends Component {
     render() {
-        const { color, choosePieceToMove, choosing, item, whiteTurn } = this.props;
+        const { color, choosePieceToMove, choosing, item } = this.props;
         let empty = '';
         let pieceImg = '';
         let buttonClass = 'square';

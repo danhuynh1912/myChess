@@ -79,11 +79,13 @@
     margin-right: 15px;
 }
 
-.user-name, .user-content {
+.user-name,
+.user-content {
     margin-bottom: 18px
 }
 
-.user-name h5, .user-name p {
+.user-name h5,
+.user-name p {
     margin: 0
 }
 
@@ -101,11 +103,18 @@
     font-size: 15px;
 }
 
-.interactive .react{
+.interactive .react {
     text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.interactive .react p{
+.interactive .react:hover {
+    background: #ececec8c;
+}
+
+.interactive .react p {
     font-size: 14px;
     margin: 0;
 }

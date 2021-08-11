@@ -262,15 +262,15 @@ export default class Board extends Component {
 
     randomAI() {
         const { whiteTurn } = this.state;
-        let allMoveOfAI = this.allMoveOfAI();
+        let allMoveOfAI = this.allMoveOfAI2();
         if (!allMoveOfAI.length) {
             alert("Checkmate!!!");
         }
         else {
             // let randomMove = allMoveOfAI[Math.floor(Math.random() * allMoveOfAI.length)];
-            let randomMove = this.minValue();
+            let randomMove = this.getBestMove(allMoveOfAI);
             this.movePiece(randomMove.move.x, randomMove.move.y, randomMove.pieceToMove.x, randomMove.pieceToMove.y, randomMove.pieceToMove.currentPiece, randomMove.pieceToMove.pieceColor, randomMove.pieceToMove.pieceValue);
-            this.props.runTime(whiteTurn);
+            // this.props.runTime(whiteTurn);
         }
     }
 
@@ -287,6 +287,7 @@ export default class Board extends Component {
             allSquare: allSquare,
             whiteTurn: !whiteTurn
         })
+        this.props.runTime(whiteTurn);
     }
 
     movePieceForAI(xNew, yNew, xOld, yOld, newPiece, newColor, newValue, _allSquare) {
@@ -352,7 +353,7 @@ export default class Board extends Component {
         return "Not";
     }
 
-    checkIfMovePossibleToEscape(_allSquare) {
+    checkIfMovePossibleToEscape(_allSquare) {                   //check xem có đang bị chiếu tướng ko 
         const { whiteTurn } = this.state;
 
         let result = false;
@@ -400,12 +401,12 @@ export default class Board extends Component {
             if (willMove.ready && allSquare[x][y].possibleToMove) {
                 this.defaultPossibleToMove();
                 this.movePiece(x, y, willMove.curX, willMove.curY, willMove.piece, willMove.color, willMove.value);
+                
                 if (whiteTurn) {
                     setTimeout(() => {
                         this.randomAI();
-                    }, 2000)
+                    }, 50)
                 }
-                runTime(whiteTurn);
             }
 
         }
@@ -413,8 +414,204 @@ export default class Board extends Component {
     }
 
     // minimax
+    getBestMove(possibleMovesRandomPiece) {
+        let min = possibleMovesRandomPiece[0].maxPlayerMovesValue;
+        let results = [];
+        let count = 0;
+        for (let i = 0; i < possibleMovesRandomPiece.length; i++) {
+            if (possibleMovesRandomPiece[i].maxPlayerMovesValue < min) {
+                min = possibleMovesRandomPiece[i].maxPlayerMovesValue;
+                count++;
+            }
+        }
+        for (let i = 0; i < possibleMovesRandomPiece.length; i++) {
+            if (possibleMovesRandomPiece[i].maxPlayerMovesValue === min) {
+                results.push(possibleMovesRandomPiece[i]);
+            }
+        }
+        let randomMove = results[Math.floor(Math.random() * results.length)];
+        return randomMove;
 
+    }
 
+    allMoveOfAI2() {
+        const { allSquare } = this.state;
+        let _allSquare = JSON.parse(JSON.stringify(allSquare));
+        let possibleMovesRandomPiece = [];
+        let AIPieces = [];
+
+        let alphaBeta = [];
+
+        this.getAllPossibleAiPieces(AIPieces);
+        let _AIPieces = JSON.parse(JSON.stringify(AIPieces));
+        for (let n = 0; n < _AIPieces.length; n++) {
+            for (let i = 0; i < _allSquare.length; i++) {
+                for (let j = 0; j < _allSquare[i].length; j++) {
+                    if (pieceMove(i, j, _AIPieces[n].x, _AIPieces[n].y, _AIPieces[n].currentPiece, _allSquare)) {
+                        this.movePieceForAI(i, j, _AIPieces[n].x, _AIPieces[n].y, _AIPieces[n].currentPiece, _AIPieces[n].pieceColor, _AIPieces[n].pieceValue, _allSquare);
+                        let _allSquare_ = JSON.parse(JSON.stringify(_allSquare));
+                        if (this.checkIfMovePossibleToEscape(_allSquare)) {
+                            let a = this.maxValuePlayerMove(this.allPlayerMoves(_allSquare_, alphaBeta));
+                            if(a !== false) {
+                                alphaBeta.push(a.maxBoard);
+                                possibleMovesRandomPiece.push({
+                                    pieceToMove: AIPieces[n],
+                                    move: allSquare[i][j],
+                                    board: _allSquare_,
+                                    maxPlayerMovesValue: a.maxBoard,
+                                    bestPlayerMove: a.max
+                                })
+                            }
+                        }
+                        _allSquare[i][j].currentPiece = allSquare[i][j].currentPiece;
+                        _allSquare[i][j].pieceColor = allSquare[i][j].pieceColor;
+                        _allSquare[i][j].pieceValue = allSquare[i][j].pieceValue;
+
+                        _allSquare[_AIPieces[n].x][_AIPieces[n].y].currentPiece = AIPieces[n].currentPiece;
+                        _allSquare[_AIPieces[n].x][_AIPieces[n].y].pieceColor = AIPieces[n].pieceColor;
+                        _allSquare[_AIPieces[n].x][_AIPieces[n].y].pieceValue = AIPieces[n].pieceValue;
+                    }
+                }
+            }
+        }
+        console.log(possibleMovesRandomPiece);
+        return possibleMovesRandomPiece;
+    }
+
+    getAllPossiblePlayerPieces(AIPieces, allSquare) {
+        allSquare.forEach((item, index) => {
+            allSquare[index].forEach((item2, index2) => {
+                if (item2.pieceColor === WHITE_PIECE && this.checkIfAiPieceHasPossibleMove(item2)) {
+                    AIPieces.push(item2);
+                }
+            })
+        })
+    }
+
+    allPlayerMoves(allSquareList, alphaBeta) {
+        let _allSquare = JSON.parse(JSON.stringify(allSquareList));
+        let possibleMovesPlayerPiece = [];
+        let AIPieces = [];
+
+        // console.log(alphaBeta);
+
+        this.getAllPossiblePlayerPieces(AIPieces, allSquareList);
+        let _AIPieces = JSON.parse(JSON.stringify(AIPieces));
+        for (let n = 0; n < _AIPieces.length; n++) {
+            for (let i = 0; i < _allSquare.length; i++) {
+                for (let j = 0; j < _allSquare[i].length; j++) {
+                    if (pieceMove(i, j, _AIPieces[n].x, _AIPieces[n].y, _AIPieces[n].currentPiece, _allSquare)) {
+                        this.movePieceForAI(i, j, _AIPieces[n].x, _AIPieces[n].y, _AIPieces[n].currentPiece, _AIPieces[n].pieceColor, _AIPieces[n].pieceValue, _allSquare);
+                        if (this.checkIfMovePossibleToEscape2(_allSquare)) {
+                            let _allSquare_ = JSON.parse(JSON.stringify(_allSquare));
+                            if(alphaBeta.length >= 1 && this.totalValueBoard(_allSquare_) > alphaBeta[0]) {
+                                possibleMovesPlayerPiece = [];
+                                break;
+                            }
+                            else {
+                                possibleMovesPlayerPiece.push({
+                                    pieceToMove: AIPieces[n],
+                                    move: allSquareList[i][j],
+                                    board: _allSquare_
+                                })
+                            }
+                        }
+                        _allSquare[i][j].currentPiece = allSquareList[i][j].currentPiece;
+                        _allSquare[i][j].pieceColor = allSquareList[i][j].pieceColor;
+                        _allSquare[i][j].pieceValue = allSquareList[i][j].pieceValue;
+
+                        _allSquare[_AIPieces[n].x][_AIPieces[n].y].currentPiece = AIPieces[n].currentPiece;
+                        _allSquare[_AIPieces[n].x][_AIPieces[n].y].pieceColor = AIPieces[n].pieceColor;
+                        _allSquare[_AIPieces[n].x][_AIPieces[n].y].pieceValue = AIPieces[n].pieceValue;
+                    }
+                }
+            }
+        }
+        // console.log('====');
+        // console.log(possibleMovesPlayerPiece);
+        return possibleMovesPlayerPiece;
+    }
+
+    maxValuePlayerMove(allPlayerMoves) {
+        if(allPlayerMoves.length === 0) return false;
+        else {
+            let maxBoard = this.totalValueBoard(allPlayerMoves[0].board);
+            let max = allPlayerMoves[0];
+            for (let i = 0; i < allPlayerMoves.length; i++) {
+                if (this.totalValueBoard(allPlayerMoves[i].board) > maxBoard) {
+                    maxBoard = this.totalValueBoard(allPlayerMoves[i].board);
+                    max = allPlayerMoves[i];
+                }
+            }
+            return {
+                maxBoard: maxBoard,
+                max: max
+            };
+        }
+    }
+
+    minValuePlayerMove(values) {
+        let min = values[0];
+        for (let i = 0; i < values.length; i++) {
+            if (values[i] < min) {
+                min = values[i];
+            }
+        }
+        return min;
+    }
+
+    controlledSquaresList2(_allSquare) {
+        const { whiteTurn } = this.state;
+        let allControlledSquares = [];
+        for (let i = 0; i < _allSquare.length; i++) {
+            for (let j = 0; j < _allSquare[i].length; j++) {
+                if (_allSquare[i][j].pieceColor === WHITE_PIECE) {
+                    let attackPiece = _allSquare[i][j];
+                    let controlledSquares = [];
+                    for (let _i = 0; _i < _allSquare.length; _i++) {
+                        for (let _j = 0; _j < _allSquare[_i].length; _j++) {
+                            if (pieceMove(_i, _j, _allSquare[i][j].x, _allSquare[i][j].y, _allSquare[i][j].currentPiece, _allSquare)) {
+                                controlledSquares.push(_allSquare[_i][_j]);
+                            }
+                        }
+                    }
+                    allControlledSquares.push({
+                        attackPiece: attackPiece,
+                        controlledSquares: controlledSquares
+                    })
+                }
+            }
+        }
+        return allControlledSquares;
+    }
+
+    checkIfItemControlled2(king, allSquare) {
+        for (let i = 0; i < this.controlledSquaresList2(allSquare).length; i++) {
+            for (let j = 0; j < this.controlledSquaresList2(allSquare)[i].controlledSquares.length; j++) {
+                if (king.x === this.controlledSquaresList2(allSquare)[i].controlledSquares[j].x && king.y === this.controlledSquaresList(allSquare)[i].controlledSquares[j].y) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    checkIfMovePossibleToEscape2(_allSquare) {
+        const { whiteTurn } = this.state;
+
+        let result = false;
+        for (let i = 0; i < _allSquare.length; i++) {
+            for (let j = 0; j < _allSquare[i].length; j++) {
+                if (_allSquare[i][j].pieceColor === WHITE_PIECE) {
+                    if (_allSquare[i][j].currentPiece.indexOf("KING") !== -1 && !this.checkIfItemControlled2(_allSquare[i][j], _allSquare)) {
+                        result = true;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     render() {
         const { allSquare, willMove, whiteTurn } = this.state;

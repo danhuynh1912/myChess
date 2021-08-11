@@ -1,8 +1,10 @@
 import { ADD_BLOG } from './actionType';
+import { DISLIKE_BLOG } from './actionType';
 import { LIKE_BLOG } from './actionType';
 
 const blogInitState = {
-    blogs: []
+    blogs: [],
+    liked: []
 }
 
 const blogReducer = (state = blogInitState, action) => {
@@ -19,9 +21,19 @@ const blogReducer = (state = blogInitState, action) => {
         case LIKE_BLOG: {
             return {
                 ...state,
-                blogs: [
+                liked: [
                     action.payload,
-                    ...state.blogs.slice(1)
+                    ...state.liked
+                ]
+            }
+        }
+        case DISLIKE_BLOG: {
+
+            return {
+                ...state,
+                liked: [
+                    ...state.liked.slice(0, action.payload),
+                    ...state.liked.slice(action.payload + 1)
                 ]
             }
         }

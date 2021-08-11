@@ -8,6 +8,7 @@ import setup from '../static/images/setup.svg'
 import back1 from '../static/images/back1.svg'
 
 import Board from './Board';
+import TimeCountContainer from '../container/TimeCountContainer';
 
 import {
     Link
@@ -17,8 +18,6 @@ export default class PlayWithAI extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            aiMin: 0,
-            aiSec: 0,
             yourMin: 0,
             yourSec: 0
         }
@@ -28,23 +27,22 @@ export default class PlayWithAI extends Component {
     componentDidMount() {
         const { aiGames } = this.props;
         this.setState({
-            aiMin: aiGames[0].time,
-            aiSec: 0,
             yourMin: aiGames[0].time,
             yourSec: 0
         })
     }
 
     runTime(whiteTurn) {
+        console.log(whiteTurn);
         clearInterval(this.loop);
         this.loop = setInterval(() => {
-            if (whiteTurn) {
-                this.setState({
-                    aiMin: this.state.aiSec === 0 ? this.state.aiMin - 1 : this.state.aiMin,
-                    aiSec: this.state.aiSec === 0 ? 59 : this.state.aiSec - 1
-                })
-            }
-            else {
+            // if (whiteTurn) {
+            //     this.setState({
+            //         aiMin: this.state.aiSec === 0 ? this.state.aiMin - 1 : this.state.aiMin,
+            //         aiSec: this.state.aiSec === 0 ? 59 : this.state.aiSec - 1
+            //     })
+            // }
+            if (!whiteTurn) {
                 this.setState({
                     yourMin: this.state.yourSec === 0 ? this.state.yourMin - 1 : this.state.yourMin,
                     yourSec: this.state.yourSec === 0 ? 59 : this.state.yourSec - 1
@@ -55,14 +53,18 @@ export default class PlayWithAI extends Component {
 
     render() {
         const { aiGames } = this.props;
-        const { aiMin, aiSec, yourMin, yourSec } = this.state;
+        const { yourMin, yourSec } = this.state;
         return <div className='aiplay'>
             <div className='row'>
                 <div className='col-8 center-board'>
                     <Board runTime={this.runTime} />
                 </div>
                 <div className='col-4'>
-                    <div className='setup-game'>
+                    <TimeCountContainer 
+                        yourMin={yourMin}
+                        yourSec={yourSec}
+                    />
+                    {/* <div className='setup-game'>
                         <div className='time opponent-time'>
                             <img src={opponentAvatar} alt="" />
                             <div>
@@ -95,7 +97,7 @@ export default class PlayWithAI extends Component {
                                 <Link to=''>Back</Link>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
 .navigation {
     background: #e8ecef;
     height: 100%;
-    padding: 30px 30px 30px 50px 
+    padding: 30px 30px 30px 30px 
 }
 
 .logo {
@@ -21,7 +21,17 @@
 
 .navigation li {
     display: block;
-    margin-bottom: 15px
+    /* margin-bottom: 15px */
+    padding: 10px 10px 10px 15px;
+}
+
+.nav-active span{
+    color: #2e4cbb
+}
+
+.nav-active {
+    background: #d9dee2;
+    border-right: 2px solid #2e4cbb;
 }
 
 .navigation ul {

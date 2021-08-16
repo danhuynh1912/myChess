@@ -135,7 +135,7 @@
     width: 18px;
 }
 
-.friend-avt img {
+.friend-avtimg {
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -183,7 +183,7 @@
 
 @media (min-width: 1280px) and (max-width: 1380px) {
     .navigation {
-        padding: 30px 10px 30px 20px !important;
+        padding: 30px 10px 30px 10px !important;
     }
     
     .navigation span {
@@ -201,7 +201,7 @@
 
 @media (min-width: 1381px) and (max-width: 1560px) {
     .navigation {
-        padding: 30px 10px 30px 32px !important;
+        padding: 30px 10px 30px 10px !important;
     }
 
     .intro-title {

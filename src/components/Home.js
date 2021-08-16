@@ -9,6 +9,10 @@ import {
 import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
+import Profile from './Profile';
+import HistoryPage from './HistoryPage';
+import Friends from './Friends';
+import Users from './Users';
 import Blog from './Blog';
 import BlogContainer from '../container/BlogContainer';
 import Lesson from './Lesson';
@@ -27,9 +31,6 @@ export default class Home extends Component {
             </div>
             <div className='col-10'>
                 <Switch>
-                <Route path="/ArticlesList">
-                        <ArticlesList />
-                    </Route>
                     <Route path="/lesson">
                         <Lesson />
                     </Route>
@@ -42,14 +43,30 @@ export default class Home extends Component {
                     <Route path="/gamewithai">
                         <PlayWithAiContainer />
                     </Route>
+                    <Route path="/articles">
+                        <ArticlesList />
+                    </Route>
+                    <Route path="/lesson">
+                        <Lesson />
+                    </Route>
+                    <Route path="/profile">
+                        <Profile />
+                    </Route>
+                    <Route path="/history">
+                        <HistoryPage />
+                    </Route>
+                    <Route path="/users">
+                        <Users />
+                    </Route>
+                    <Route path="/friends">
+                        <Friends />
+                    </Route>
                     <Route path="/blog">
                         <BlogContainer/>
                     </Route>
                     <Route path="/">
                         <HomePage />
                     </Route>
-
-                    
                 </Switch>
             </div>
         </div>

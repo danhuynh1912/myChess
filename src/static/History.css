@@ -1,0 +1,12 @@
+.game-list {
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 5%);
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 25px
+}
+
+.history-page tr{
+    border-bottom: 1px solid #cccccc56;
+    height: 54px;
+}

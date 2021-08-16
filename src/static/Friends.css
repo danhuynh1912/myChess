@@ -1,0 +1,65 @@
+.yourfriends {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.yourfriends > button {
+    width: 50px;
+    background: none;
+    border: none;
+    margin-left: auto;
+}
+
+.btn-secondary:hover {
+    background: #c7c7c742 !important;
+    border: none !important;
+}
+
+.btn-secondary:focus {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.yourfriends button img {
+    width: 60%;
+}
+
+.popover-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 8rem;
+}
+
+.option-button {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.unfriend {
+    border: 2px solid #5b78e2;
+    color: white;
+    background: #5b78e2;
+}
+
+.seeprof {
+    background: none;
+    border: 2px solid #5b78e2;
+    color: #5b78e2;
+}
+
+.list-button {
+    margin-left: auto;
+}
+
+.list-button button {
+    background: none;
+    border: 2px solid #5b78e2;
+    color: #5b78e2;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+}

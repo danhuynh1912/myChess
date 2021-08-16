@@ -1,0 +1,140 @@
+.blog-list {
+    width: 70%;
+    margin: 0px auto 25px auto;
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 3px 7px 0px rgb(0 8 5 / 5%);
+}
+
+.post-blog h5 {
+    font-weight: 600;
+    opacity: .8;
+}
+
+.post-input {
+    display: flex;
+    align-items: center;
+}
+
+.post-input img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.post-input input {
+    width: 100%;
+    border: none;
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.342) !important; */
+    padding: 5px
+}
+
+.post-button {
+    width: 100%;
+    text-align: left !important;
+    background: #e7e7e7 !important;
+    color: black !important;
+    border: none !important;
+    box-shadow: none !important;
+    opacity: .5;
+}
+
+.post-button:hover {
+    background: #cecece !important;
+}
+
+.modal-open {
+    padding-right: 0px !important;
+}
+
+.textinput {
+    width: 100%;
+    border: none;
+}
+
+.textinput:focus {
+    outline: none;
+}
+
+.postbutton {
+    background: #5b78e2 !important;
+}
+
+.post-button:focus {
+    box-shadow: none;
+}
+
+.user-avt {
+    display: flex
+}
+
+.user-avt img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.user-name,
+.user-content {
+    margin-bottom: 18px
+}
+
+.user-name h5,
+.user-name p {
+    margin: 0
+}
+
+.user-name h5 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.user-name p {
+    font-size: 14px;
+    opacity: .7;
+}
+
+.user-content p {
+    font-size: 15px;
+}
+
+.interactive .react {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.interactive .react:hover {
+    background: #ececec8c;
+}
+
+.interactive .react p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.react {
+    display: flex;
+    justify-content: center;
+}
+
+.react img {
+    width: 20px;
+    margin-right: 7px
+}
+
+.saved img {
+    width: 15px;
+}
+
+@media screen and (max-width: 1700px) {
+    .blog-list {
+        width: 90%;
+    }
+}

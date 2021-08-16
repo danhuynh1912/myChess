@@ -58,6 +58,7 @@ export default class Nav extends Component {
                     </li>
                     <li className={pathname === "/playwithai"? "nav-active":""} onClick={() => this.activePage(pathname)}>
                         <Link to="/playwithai">
+<<<<<<< HEAD
                             <img src={pathname === "/playwithai"? aiHomeActive:aiHome} alt="" />
                             <span>Play with AI</span>
                         </Link>
@@ -65,11 +66,21 @@ export default class Nav extends Component {
                     <li className={pathname === "/blog"? "nav-active":""} onClick={() => this.activePage(pathname)}>
                         <Link to="/blog">
                             <img src={pathname === "/blog"? blog:blog} alt="" />
+=======
+                            <img src={aiHome} alt="" />
+                            <span>Play with AI</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/blog">
+                            <img src={blog} alt="" />
+>>>>>>> c50cd4dc3cadb64afafd0b0653b01738450a95ee
                             <span>Blog</span>
                         </Link>
                     </li>
                     <li className={pathname === "/lesson"? "nav-active":""} onClick={() => this.activePage(pathname)}>
                         <Link to="/lesson">
+<<<<<<< HEAD
                             <img src={pathname === "/lesson"? lessonHomeActive:lessonHome} alt="" />
                             <span>Lesson</span>
                         </Link>
@@ -90,6 +101,16 @@ export default class Nav extends Component {
                         <Link to="/users">
                             <img src={pathname === "/users"? usersActive:users} alt="" />
                             <span>Users</span>
+=======
+                            <img src={lessonHome} alt=""/>
+                            <span>Lesson</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/ArticlesList">
+                            <img src={article} alt=""/>
+                            <span>ArticlesList</span>
+>>>>>>> c50cd4dc3cadb64afafd0b0653b01738450a95ee
                         </Link>
                     </li>
                 </ul>

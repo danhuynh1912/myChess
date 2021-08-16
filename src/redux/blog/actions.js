@@ -1,0 +1,18 @@
+import { ADD_BLOG } from './actionType';
+import { LIKE_BLOG } from './actionType';
+import { DISLIKE_BLOG } from './actionType';
+
+export const addBlog = (item) => ({
+    type: ADD_BLOG,
+    payload: item
+})
+
+export const likeBlog = (item) => ({
+    type: LIKE_BLOG,
+    payload: item
+})
+
+export const disLikeBlog = (index) => ({
+    type: DISLIKE_BLOG,
+    payload: index
+})

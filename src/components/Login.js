@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../static/Login.css';
-import avt1 from '../static/images/avt1.jpeg'
+import logo from '../static/images/logo.png'
 
 import ContactUs from './ContactUs';
 import FriendsListHome from './FriendsListHome';
@@ -17,7 +17,10 @@ export default class Login extends Component {
             <div className="row">
                 <div className="col-6">
                     <div className="form-login">
-                        <h1>Login</h1>
+                        <div style={{display: 'flex'}}>
+                            <img src={logo} alt="" style={{width: 40, height: 40, marginTop: 5}}/>
+                            <h1>Login</h1>
+                        </div>
                         <div className="form">
                             <div className='social'>
                                 <a href="#a">
@@ -28,7 +31,7 @@ export default class Login extends Component {
                             </div>
                             <p className="or-sign-in-email">---------- or sign in with email ----------</p>
                             <b>Account:</b>
-                            <input type="text" placeholder="your email" />
+                            <input type="text" placeholder="Username or your email" />
                             <b>Password:</b>
                             <input type="password" placeholder="your password" />
                             {/* <div><input type="checkbox"/> <p>Remember me</p></div> */}
@@ -44,7 +47,6 @@ export default class Login extends Component {
                             <Link to="/">
                                 <button className="button-login">Login</button>
                             </Link>
-
                             <p>Not registered yet? <Link to="/register">Create an Account</Link></p>
                         </div>
                     </div>

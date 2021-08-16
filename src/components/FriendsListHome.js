@@ -19,7 +19,7 @@ export default class Home extends Component {
             <div className='friend-avt'>
                 { friends.length > 0 && friends.map(item => <div className='friend-info'>
                     <p className='friend-number'>{item.number}</p>
-                    <img src={item.img} alt="" />
+                    <img className="friend-avtimg" src={item.img} alt="" />
                     <div className='name-id'>
                         <p className='friend-name'>{item.name}</p>
                         <span className='friend-id'>{item.id}</span>

@@ -20,7 +20,8 @@ import friendsActive from '../static/images/friendsActive.svg';
 import users from '../static/images/users.svg';
 import usersActive from '../static/images/usersActive.svg';
 import blog from '../static/images/blog.svg';
-// import usersActive from '../static/images/usersActive.svg';
+import requests from '../static/images/requests.svg';
+import requestsActive from '../static/images/requestsActive.svg';
 
 import {
     Link
@@ -90,6 +91,12 @@ export default class Nav extends Component {
                         <Link to="/users">
                             <img src={pathname === "/users"? usersActive:users} alt="" />
                             <span>Users</span>
+                        </Link>
+                    </li>
+                    <li className={pathname === "/requests"? "nav-active":""} onClick={() => this.activePage(pathname)}>
+                        <Link to="/requests">
+                            <img src={pathname === "/requests"? requestsActive:requests} alt="" />
+                            <span>Friend requests</span>
                         </Link>
                     </li>
                 </ul>

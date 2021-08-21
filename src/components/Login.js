@@ -20,7 +20,6 @@ export default class Login extends Component {
         const res = await axios.get(`/api/get-all-players`);
         const playerId = res.data.data;
         this.setState = ({playerId});
-        debugger;
     }
 
     render() {

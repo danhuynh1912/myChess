@@ -18,6 +18,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {
     Link
 } from "react-router-dom";
+import axios from 'axios';
 
 export default class Blog extends Component {
     constructor(props) {
@@ -28,10 +29,18 @@ export default class Blog extends Component {
                 userId: 'danhuynh',
                 avt: avt,
                 userName: 'Huỳnh Ngọc Danh'
-            }
+            },
+            blogLists : [],
         }
 
         this.textInputRef = React.createRef();
+    }
+
+    async componentDidMount(){
+        const blog = await axios.get(`/api/get-all-blog-by-playerID?playerID=1`);
+        const listBlog = blog.data.data;
+        this.setState({blogLists: listBlog})
+        debugger;
     }
 
     toggle = () => {
@@ -100,13 +109,13 @@ export default class Blog extends Component {
         // ]
         const { blogList, likeBlog, liked } = this.props;
 
+        const {blogLists} = this.state;
         return <div className='aiplay'>
             <div className='row'>
                 <div className='col-8'>
                     <div className="blog-list post-blog">
                         <h5>Post Something</h5>
                         <div>
-
                             <Modal isOpen={this.state.modal} toggle={this.toggle} >
                                 <ModalHeader>Create post</ModalHeader>
                                 <ModalBody>
@@ -136,7 +145,7 @@ export default class Blog extends Component {
                             </div>
                         </div>
                         <div className="user-content">
-                            <p>{item.content}</p>
+                            <p>{blogLists[0].content}</p>
                         </div>
                         <hr />
                         <div className="interactive row">

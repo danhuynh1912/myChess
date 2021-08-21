@@ -5,8 +5,14 @@ import ContactUs from './ContactUs';
 import FriendsListHome from './FriendsListHome';
 
 import '../static/History.css';
+import axios from 'axios';
 
 export default class History extends Component {
+
+    async componentDidMount() {
+        const history = await axios.get(`/api/get-all-aigame?playerID${1}`);
+    }
+
     render() {
         const games = [
             { level: 'Level 1', result: 'win', moves: '26', date: 'Jun 29, 2021' },

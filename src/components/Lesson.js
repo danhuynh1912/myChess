@@ -8,6 +8,8 @@ import FriendsListHome from './FriendsListHome';
 const info = "This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc."
 
 export default class Lesson extends Component {
+
+    
     constructor() {
         super();
         this.state = {

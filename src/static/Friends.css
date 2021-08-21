@@ -63,3 +63,53 @@
     border-radius: 5px;
     margin-left: 10px;
 }
+
+
+.request-avt {
+    height: 13rem;
+    object-fit: cover;
+}
+
+.twobtn {
+    width: 100%;
+    border: none !important;
+}
+
+.confirm {
+    margin-bottom: 10px;
+}
+
+.confirm:hover {
+    background: #6b87ec !important;
+}
+
+.delete-res {
+    background: #d6d6d6 !important;
+    color: black !important
+}
+
+.delete-res:hover {
+    background: #e4e4e4 !important;
+}
+
+.res-name {
+    font-weight: 600;
+}
+
+@media (min-width: 1650px) and (max-width: 1850px) {
+    .res-name {
+        font-size: 16px !important;
+    }
+}
+
+@media (min-width: 1440px) and (max-width: 1649px) {
+    .res-name {
+        font-size: 15px !important;
+    }
+}
+
+@media screen and (max-width: 1439px) {
+    .res-name {
+        font-size: 13px !important;
+    }
+}

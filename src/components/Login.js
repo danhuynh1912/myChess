@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import '../static/Login.css';
 // import '../static/ChoseLevelAi.css';
 import logo from '../static/images/logo.png'
-
-import ContactUs from './ContactUs';
-import FriendsListHome from './FriendsListHome';
+import axios from 'axios';
 
 import {
     Link
@@ -12,9 +10,22 @@ import {
 import facebook from "../static/images/facebook1.svg";
 
 export default class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            playerId: 0,
+        }
+    }
+    
+    async componentDidMount(){
+        const res = await axios.get(`/api/get-all-players`);
+        const playerId = res.data.data;
+        this.setState = ({playerId});
+        debugger;
+    }
+
     render() {
         return <div className="login">
-
             <div className="row">
                 <div className="col-6">
                     <div className="form-login">
@@ -24,8 +35,8 @@ export default class Login extends Component {
                         <div className="form">
                             <div className='social'>
                                 <a href="#a">
-                                    <button>
-                                        <img src={facebook} alt="" /><p>Sign in with Facebook</p>
+                                    <button style={{display:'flex'}}>
+                                        <img style={{width: 40  }} src={facebook} alt="" /><p>Sign in with Facebook</p>
                                     </button>
                                 </a>
                             </div>

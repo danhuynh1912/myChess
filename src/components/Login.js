@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../static/Login.css';
+// import '../static/ChoseLevelAi.css';
 import logo from '../static/images/logo.png'
 import axios from 'axios';
 
@@ -35,7 +36,6 @@ export default class Login extends Component {
                 <div className="col-6">
                     <div className="form-login">
                         <div style={{display: 'flex'}}>
-                            <img src={logo} alt="" style={{width: 40, height: 40, marginTop: 5}}/>
                             <h1>Login</h1>
                         </div>
                         <div className="form">

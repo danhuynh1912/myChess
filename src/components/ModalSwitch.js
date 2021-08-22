@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Home from './Home';
 import Login from './Login';
+import LoginContainer from '../container/LoginContainer';
 import Registation  from './Registation';
 
 import {
@@ -13,7 +14,7 @@ export default class ModalSwitch extends Component {
     render() {
         return <Switch>
         <Route exact path="/login">
-            <Login />
+            <LoginContainer />
         </Route>
         <Route path="/register">
             <Registation />

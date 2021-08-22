@@ -31,15 +31,18 @@ export default class Blog extends Component {
                 userName: 'Huỳnh Ngọc Danh'
             },
             blogLists : [],
+            playerList: [],
         }
-
         this.textInputRef = React.createRef();
     }
 
     async componentDidMount(){
-        const blog = await axios.get(`/api/get-all-blog-by-playerID?playerID=1`);
+        const blog = await axios.post('/api/friend-request-sent', {requesterID: 1, receiverID: 2});
         const listBlog = blog.data.data;
+        const player = await axios.get(`/api/get-all-players`);
+        const listPlayer = player.data.data;
         this.setState({blogLists: listBlog})
+        this.setState({playerList: listPlayer})
         debugger;
     }
 
@@ -120,7 +123,6 @@ export default class Blog extends Component {
                                 <ModalHeader>Create post</ModalHeader>
                                 <ModalBody>
                                     <textarea ref={this.textInputRef} className="textinput" rows="4" placeholder="What's on your mind, Danh?" >
-
                                     </textarea>
                                 </ModalBody>
                                 <ModalFooter>
@@ -145,7 +147,7 @@ export default class Blog extends Component {
                             </div>
                         </div>
                         <div className="user-content">
-                            <p>{blogLists[0].content}</p>
+                            <p>{item.content}</p>
                         </div>
                         <hr />
                         <div className="interactive row">

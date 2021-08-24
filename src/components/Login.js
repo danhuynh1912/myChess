@@ -13,14 +13,20 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            playerId: 0,
+            user: [],
         }
+        this.email = React.createRef();
+        this.password = React.createRef();  
     }
     
-    async componentDidMount(){
-        const res = await axios.get(`/api/get-all-players`);
-        const playerId = res.data.data;
-        this.setState = ({playerId});
+    componentDidMount(){
+        this.props.fetchUsers();
+    }
+
+    checkLogin = () => {
+        const user = this.props.users.find(item => item.email === this.email.current.value && item.password === this.password.current.value);
+        this.setState({user: user});
+        this.props.getUser([user]);
         debugger;
     }
 
@@ -42,9 +48,9 @@ export default class Login extends Component {
                             </div>
                             <p className="or-sign-in-email">---------- or sign in with email ----------</p>
                             <b>Account:</b>
-                            <input type="text" placeholder="Username or your email" />
+                            <input type="text" placeholder="Username or your email" ref={this.email} />
                             <b>Password:</b>
-                            <input type="password" placeholder="your password" />
+                            <input type="password" placeholder="your password" ref={this.password} />
                             {/* <div><input type="checkbox"/> <p>Remember me</p></div> */}
                             <div>
                                 <input className="inp-cbu" id="rememberAccount" type="checkbox" value="rememberAccount" name='levelai' />
@@ -56,7 +62,7 @@ export default class Login extends Component {
                                 <span>Remember me</span>
                             </div>
                             <Link to="/">
-                                <button className="button-login">Login</button>
+                                <button className="button-login" onClick={this.checkLogin}>Login</button>
                             </Link>
                             <p>Not registered yet? <Link to="/register">Create an Account</Link></p>
                         </div>

@@ -14,8 +14,14 @@ import article7 from '../static/images/article7.png';
 import article8 from '../static/images/article8.png';
 import article9 from '../static/images/article9.png';
 import article10 from '../static/images/article10.png';
+import axios from 'axios';
+
 
 export default class ArticlesList extends Component {
+
+    async componentDidMount(){
+        const res = await axios.get(`/api/get-all-articlesaved`);
+    }
 
     render() {
         const articles = [

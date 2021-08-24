@@ -117,7 +117,7 @@ export default class Nav extends Component {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/playwithai">
+                        <Link to="/login">
                             <img src={logout} alt=""/>
                             <span>Sign out</span>
                         </Link>

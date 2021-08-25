@@ -6,6 +6,8 @@ import rootSaga from "./saga/index";
 import aiGameReducer from './redux/aiGame/reducer';
 import blogReducer from './redux/blog/reducer';
 import userReducer from './redux/user/reducer';
+import lessonsReducer from './redux/lesson/reducer';
+import articlesReducer from "./redux/articles/reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +15,8 @@ const reducer = combineReducers({
     aiGame: aiGameReducer,
     blog: blogReducer,
     user: userReducer,
+    lessons: lessonsReducer,
+    articles: articlesReducer,
 })
 
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));

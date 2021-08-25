@@ -14,13 +14,25 @@ import article7 from '../static/images/article7.png';
 import article8 from '../static/images/article8.png';
 import article9 from '../static/images/article9.png';
 import article10 from '../static/images/article10.png';
-import axios from 'axios';
 
 
 export default class ArticlesList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listArticles: [],
+        }
+    }
 
-    async componentDidMount(){
-        const res = await axios.get(`/api/get-all-articlesaved`);
+    componentDidMount(){
+        this.props.fetchArticles();
+        
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.listArticles !== this.props.articles) {
+            this.setState({listArticles: this.props.articles})
+        }
     }
 
     render() {
@@ -28,7 +40,8 @@ export default class ArticlesList extends Component {
             { 
                 id: 'a1', 
                 title: '5 Amusing Back Rank Checkmate Stories', 
-                img: article1, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 
+                img: article1,
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 
                 link: 'https://www.chess.com/article/view/5-amusing-back-rank-checkmate-stories'
             },
             { 
@@ -70,19 +83,22 @@ export default class ArticlesList extends Component {
             { 
                 id: 'a8', 
                 title: 'Do You Know Classic Chess Games Better Than Magnus Carlsen?', 
-                img: article8, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
+                img: article8, 
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
                 link: 'https://www.chess.com/article/view/classic-chess-games-magnus-carlsen'
             },
             { 
                 id: 'a9', 
                 title: "10 Positions Chess Engines Just Don't Understand", 
-                img: article9, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
+                img: article9, 
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
                 link: 'https://www.chess.com/article/view/10-positions-chess-engines-just-dont-understand'
             },
             { 
                 id: 'a10', 
                 title: 'Arena Kings Season 7 Leaderboard', 
-                img: article10, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
+                img: article10, 
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
                 link: 'https://www.chess.com/article/view/arena-kings-season-7-leaderboard'
             },
         ];

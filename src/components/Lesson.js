@@ -5,21 +5,24 @@ import '../static/Lesson.css'
 import ContactUs from './ContactUs';
 import FriendsListHome from './FriendsListHome';
 
-const info = "This grid is an attempt to make something nice that works on touch devices. Ignoring hover states when they're not available etc."
-
 export default class Lesson extends Component {
-
-    
     constructor() {
         super();
         this.state = {
             isShowing: false,
-            levels: [
-                { imgLink: 'https://source.unsplash.com/300x225/?chess', level: 'New to Chess', info: info, show: false },
-                { imgLink: 'https://source.unsplash.com/300x225/?chess', level: 'Beginner', info: info, show: false },
-                { imgLink: 'https://source.unsplash.com/300x225/?chess', level: 'Intermediate', info: info, show: false },
-                { imgLink: 'https://source.unsplash.com/300x225/?chess', level: 'Advanced', info: info, show: false },
-            ]
+            levels: [],
+        }
+    }
+
+    componentDidMount() {
+        this.props.fetchLessons();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.levels !== this.props.lessons){
+            this.setState({
+                levels: this.props.lessons,
+            })
         }
     }
 
@@ -54,6 +57,7 @@ export default class Lesson extends Component {
 
     render() {
         const { levels, showing } = this.state;
+        debugger;
         return <div className='lesson row'>
             <div className='col-8'>
                 <div class={showing? "cards showing row":"cards row"}>
@@ -61,7 +65,7 @@ export default class Lesson extends Component {
                     { levels.length > 0 && levels.map((item, index) => <div className='col-6'>
                         <div class={item.show? "card show":"card"}>
                             <div class="card__image-holder">
-                                <img class="card__image" src={item.imgLink} alt="wave" />
+                                <img class="card__image" src={item.thumbnail} alt="wave" />
                             </div>
                             <div class="card-title">
                                 <a href="#m" class="toggle-info btn" onClick={() => this.showInfomation(index)} >
@@ -69,13 +73,13 @@ export default class Lesson extends Component {
                                     <span class="right"></span>
                                 </a>
                                 <h2>
-                                    {item.level}
+                                    {item.title}
                                     <small>Image from unsplash.com</small>
                                 </h2>
                             </div>
                             <div class="card-flap flap1">
                                 <div class="card-description">
-                                    {item.info}
+                                    {item.content}
                                 </div>
                                 <div class="card-flap flap2">
                                     <div class="card-actions">

@@ -13,7 +13,7 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: [],
+            user: undefined,
         }
         this.email = React.createRef();
         this.password = React.createRef();  
@@ -24,13 +24,16 @@ export default class Login extends Component {
     }
 
     checkLogin = () => {
-        const user = this.props.users.find(item => item.email === this.email.current.value && item.password === this.password.current.value);
-        this.setState({user: user});
-        this.props.getUser([user]);
+        const user1 = this.props.users.find(item => item.email === this.email.current.value && item.password === this.password.current.value);
+        this.setState({user: user1});
+        this.props.getUser([user1]);
+        const {user} = this.state;
         debugger;
     }
 
     render() {
+        const {user} = this.state;
+        debugger;
         return <div className="login">
             <div className="row">
                 <div className="col-6">
@@ -61,10 +64,11 @@ export default class Login extends Component {
                                 </label>
                                 <span>Remember me</span>
                             </div>
-                            <Link to="/">
-                                <button className="button-login" onClick={this.checkLogin}>Login</button>
+                            <Link  onClick={this.checkLogin} to={user !== undefined ? "/" : "/login"}>
+                                <button className="button-login">Login</button>
                             </Link>
                             <p>Not registered yet? <Link to="/register">Create an Account</Link></p>
+                            {user === undefined && <p>Bạn chưa nhập tài khoản hoặc mật khẩu</p> }
                         </div>
                     </div>
                 </div>

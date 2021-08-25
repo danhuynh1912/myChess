@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Home from './Home';
 import Login from './Login';
 import LoginContainer from '../container/LoginContainer';
-import Registation  from './Registation';
+import RegisterContainer  from '../container/RegisterContainer';
 
 import {
     Switch,
@@ -17,7 +17,7 @@ export default class ModalSwitch extends Component {
             <LoginContainer />
         </Route>
         <Route path="/register">
-            <Registation />
+            <RegisterContainer />
         </Route>
         <Route path="/">
             <Home />

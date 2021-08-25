@@ -10,12 +10,12 @@ import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
 import Profile from './Profile';
-import ArticlesList from './ArticlesList';
-import Lesson from './Lesson';
 import HistoryPage from './HistoryPage';
 import Friends from './Friends';
 import Users from './Users';
 import BlogContainer from '../container/BlogContainer';
+import LessonsContainer from '../container/LessonsContainer';
+import ArticlesContainer from '../container/ArticlesContainer';
 import Requests from './Requests';
 
 // container
@@ -41,10 +41,10 @@ export default class Home extends Component {
                         <PlayWithAiContainer />
                     </Route>
                     <Route path="/articles">
-                        <ArticlesList />
+                        <ArticlesContainer />
                     </Route>
                     <Route path="/lesson">
-                        <Lesson />
+                        <LessonsContainer />
                     </Route>
                     <Route path="/profile">
                         <Profile />

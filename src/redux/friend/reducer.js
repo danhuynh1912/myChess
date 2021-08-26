@@ -1,10 +1,12 @@
 import { ADD_FRIEND } from './actionType';
 import { UNFRIEND } from './actionType';
 import { ACCEPT } from './actionType';
+import { GET_LIST_REQUEST_FRIENDS } from './actionType';
 
 const friendInitState = {
     friendRequests: [],
-    friends: []
+    friends: [],
+    listRequestFriends: []
 }
 
 const friendsReducer = (state = friendInitState, action) => {
@@ -12,10 +14,7 @@ const friendsReducer = (state = friendInitState, action) => {
         case ADD_FRIEND: {
             return {
                 ...state,
-                friendRequests: [
-                    action.payload,
-                    ...state.blogs
-                ]
+                friends:  action.payload,
             }
         }
         case UNFRIEND: {
@@ -39,6 +38,12 @@ const friendsReducer = (state = friendInitState, action) => {
                     action.payload.item,
                     ...state.friends
                 ]
+            }
+        }
+        case GET_LIST_REQUEST_FRIENDS: {
+            return {
+                ...state,
+                listRequestFriends: action.payload,
             }
         }
         default: {

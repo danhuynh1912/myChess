@@ -7,6 +7,7 @@ const url = "/api/get-all-lessons";
 
 function* setData() {
   const res = yield axios.get(url);
+  debugger;
   yield put({ type: SET_LESSONS, payload: res.data.data });
 }
 

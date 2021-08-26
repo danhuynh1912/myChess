@@ -41,6 +41,10 @@ export default class Nav extends Component {
         })
     }
 
+    clearStorage = () => {
+        localStorage.removeItem("list");
+    }
+
     render() {
         const pathname = window.location.pathname;
         console.log(pathname);
@@ -117,7 +121,7 @@ export default class Nav extends Component {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/login">
+                        <Link onClick={this.clearStorage} to="/login">
                             <img src={logout} alt=""/>
                             <span>Sign out</span>
                         </Link>

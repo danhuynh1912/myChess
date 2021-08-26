@@ -19,18 +19,29 @@ export default class Lesson extends Component {
         this.state = {
             isShowing: false,
             friends: [
-                { number: '01', name: 'Lê Hoàng Anh', id: 'HoangAnh', img: friend2, email: "ngocanh@gmail.com" },
-                { number: '02', name: 'Nguyễn Ngọc Dũng', id: 'NgocDung', img: friend1, email: "ngocdung@gmail.com" },
+                { number: '01', name: 'Loading ...', id: 'HoangAnh', img: 'https://st.quantrimang.com/photos/image/2017/04/08/anh-dai-dien-FB-200.jpg', email: "loading..." },
+                { number: '02', name: 'Loading ...', id: 'NgocDung', img: 'https://st.quantrimang.com/photos/image/2017/04/08/anh-dai-dien-FB-200.jpg', email: "Loading..." },
             ]
+        }
+    }
+
+    componentDidMount() {
+        this.props.fetchFriend();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.friends !== this.props.friends) {
+            this.setState({friends: this.props.friends});
         }
     }
 
     render() {
         const { friends } = this.state;
+        debugger;
         return <div className='lesson row'>
             <div className='col-8'>
                 <div class="friend-avt row">
-                    {friends.length > 0 && friends.map(item => <div className="col-6">
+                    {friends.length > 0 ? friends.map(item => <div className="col-6">
                         <div className='yourfriends friend-info'>
                             <img className="friend-avtimg" src={item.img} alt="" />
                             <div className='name-id'>
@@ -47,7 +58,7 @@ export default class Lesson extends Component {
                                 </PopoverBody>
                             </UncontrolledPopover>
                         </div>
-                    </div>)}
+                    </div>) : <div>Không có bạn</div>}
                 </div>
             </div>
             <div className='col-4'>

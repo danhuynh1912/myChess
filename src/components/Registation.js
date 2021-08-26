@@ -22,10 +22,11 @@ export default class Registation extends Component {
     }
 
     register = async () => {
-        const userExisted = this.props.users.find(x => x.email = this.email.current.value);
+        const {users} = this.props;
+        const userExisted = users.find(x => x.email === this.email.current.value);
         debugger;
         if(!userExisted){
-            await axios.post('/api/create-player', {password: this.password.current.value, name: this.fullName.current.value, point: '0', email: this.email.current.value});
+            await axios.post('/api/create-player', {password: this.password.current.value, name: this.fullName.current.value, point: '0', email: this.email.current.value, img: 'https://source.unsplash.com/300x225/?avatar'});
         } else {
             alert("Email đã đăng ký tài khoản trước đó");
         }

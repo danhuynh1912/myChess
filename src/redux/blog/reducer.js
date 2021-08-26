@@ -1,6 +1,7 @@
 import { ADD_BLOG } from './actionType';
 import { DISLIKE_BLOG } from './actionType';
 import { LIKE_BLOG } from './actionType';
+import { SET_BLOG } from './actionType';
 
 const blogInitState = {
     blogs: [],
@@ -37,6 +38,13 @@ const blogReducer = (state = blogInitState, action) => {
                 ]
             }
         }
+        case SET_BLOG: {
+            return {
+                ...state,
+                lessons: action.payload,
+            }
+        }
+
         default: {
             return state;
         }

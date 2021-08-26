@@ -11,12 +11,12 @@ import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
 import Profile from './Profile';
 import HistoryPage from './HistoryPage';
-import Friends from './Friends';
-import Users from './Users';
+import FriendContainer from '../container/FriendsContainer';
+import UserContainer from '../container/UserContainer';
 import BlogContainer from '../container/BlogContainer';
 import LessonsContainer from '../container/LessonsContainer';
 import ArticlesContainer from '../container/ArticlesContainer';
-import Requests from './Requests';
+import RequestFriendContainer from '../container/RequestFriendContainer';
 
 // container
 
@@ -53,13 +53,13 @@ export default class Home extends Component {
                         <HistoryPage />
                     </Route>
                     <Route path="/users">
-                        <Users />
+                        <UserContainer />
                     </Route>
                     <Route path="/friends">
-                        <Friends />
+                        <FriendContainer />
                     </Route>
                     <Route path="/requests">
-                        <Requests />
+                        <RequestFriendContainer />
                     </Route>
                     <Route path="/blog">
                         <BlogContainer/>

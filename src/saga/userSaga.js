@@ -8,7 +8,6 @@ const url = "/api/get-all-players";
 function* setData() {
   const res = yield axios.get(url);
   yield put({ type: SET_USERS, payload: res.data.data });
-  debugger;
 }
 
 function* fetchData() {

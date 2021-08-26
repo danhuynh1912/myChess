@@ -27,8 +27,8 @@ export default class Login extends Component {
         const user1 = this.props.users.find(item => item.email === this.email.current.value && item.password === this.password.current.value);
         this.setState({user: user1});
         this.props.getUser([user1]);
-        const {user} = this.state;
         debugger;
+        localStorage.setItem("list", JSON.stringify(user1));
     }
 
     render() {

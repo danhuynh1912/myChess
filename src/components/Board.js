@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import BackdropFilter from 'react-backdrop-filter';
 import Square from './Square';
+import {
+    Link
+} from "react-router-dom";
 import '../static/Board.css'
 import { ROOK_B, KNIGHT_B, BISHOP_B, PAWN_B, QUEEN_B, KING_B } from '../Piece';
 import { ROOK_W, KNIGHT_W, BISHOP_W, PAWN_W, QUEEN_W, KING_W } from '../Piece';
 import { pieceMove } from '../howToPlay/howToPlay';
+
+import winnerImg from '../static/images/winner.svg'
+import loseImg from '../static/images/lose.svg'
 
 const WHITE_PIECE = 'WHITE_PIECE';
 const BLACK_PIECE = 'BLACK_PIECE';
@@ -264,7 +271,10 @@ export default class Board extends Component {
         const { whiteTurn } = this.state;
         let allMoveOfAI = this.allMoveOfAI2();
         if (!allMoveOfAI.length) {
-            alert("Checkmate!!!");
+            // alert("Checkmate!!!");
+            this.setState({
+                check: 'Com'
+            })
         }
         else {
             // let randomMove = allMoveOfAI[Math.floor(Math.random() * allMoveOfAI.length)];
@@ -376,32 +386,39 @@ export default class Board extends Component {
             || (pieColor === willMove.color && pos !== willMove.position && pieColor !== ''))
         ) {
             let allMove = this.allMoveOfAI();
-            this.defaultPossibleToMove();
-            this.setState({
-                willMove: { piece: pie, position: pos, ready: true, color: pieColor, value: value, curX: x, curY: y }
-            })
+            if (!allMove) {
+                this.setState({
+                    check: 'You'
+                })
+            }
+            else {
+                this.defaultPossibleToMove();
+                this.setState({
+                    willMove: { piece: pie, position: pos, ready: true, color: pieColor, value: value, curX: x, curY: y }
+                })
 
-            allMove.forEach((move) => {
-                if (whiteTurn && pos === move.pieceToMove.position) {
-                    allSquare.forEach((item, xSquare) => {
-                        allSquare[xSquare].forEach((item2, ySquare) => {
-                            if (item2.position === move.move.position) {
-                                allSquare[xSquare][ySquare].possibleToMove = true;
-                            }
+                allMove.forEach((move) => {
+                    if (whiteTurn && pos === move.pieceToMove.position) {
+                        allSquare.forEach((item, xSquare) => {
+                            allSquare[xSquare].forEach((item2, ySquare) => {
+                                if (item2.position === move.move.position) {
+                                    allSquare[xSquare][ySquare].possibleToMove = true;
+                                }
+                            })
                         })
-                    })
-                }
+                    }
 
-            })
-            this.setState({
-                allSquare: allSquare
-            })
+                })
+                this.setState({
+                    allSquare: allSquare
+                })
+            }
         }
         else {
             if (willMove.ready && allSquare[x][y].possibleToMove) {
                 this.defaultPossibleToMove();
                 this.movePiece(x, y, willMove.curX, willMove.curY, willMove.piece, willMove.color, willMove.value);
-                
+
                 if (whiteTurn) {
                     setTimeout(() => {
                         this.randomAI();
@@ -452,7 +469,7 @@ export default class Board extends Component {
                         let _allSquare_ = JSON.parse(JSON.stringify(_allSquare));
                         if (this.checkIfMovePossibleToEscape(_allSquare)) {
                             let a = this.maxValuePlayerMove(this.allPlayerMoves(_allSquare_, alphaBeta));
-                            if(a !== false) {
+                            if (a !== false) {
                                 alphaBeta.push(a.maxBoard);
                                 possibleMovesRandomPiece.push({
                                     pieceToMove: AIPieces[n],
@@ -504,7 +521,7 @@ export default class Board extends Component {
                         this.movePieceForAI(i, j, _AIPieces[n].x, _AIPieces[n].y, _AIPieces[n].currentPiece, _AIPieces[n].pieceColor, _AIPieces[n].pieceValue, _allSquare);
                         if (this.checkIfMovePossibleToEscape2(_allSquare)) {
                             let _allSquare_ = JSON.parse(JSON.stringify(_allSquare));
-                            if(alphaBeta.length >= 1 && this.totalValueBoard(_allSquare_) > alphaBeta[0]) {
+                            if (alphaBeta.length >= 1 && this.totalValueBoard(_allSquare_) > alphaBeta[0]) {
                                 possibleMovesPlayerPiece = [];
                                 break;
                             }
@@ -533,7 +550,7 @@ export default class Board extends Component {
     }
 
     maxValuePlayerMove(allPlayerMoves) {
-        if(allPlayerMoves.length === 0) return false;
+        if (allPlayerMoves.length === 0) return false;
         else {
             let maxBoard = this.totalValueBoard(allPlayerMoves[0].board);
             let max = allPlayerMoves[0];
@@ -614,7 +631,7 @@ export default class Board extends Component {
     }
 
     render() {
-        const { allSquare, willMove, whiteTurn } = this.state;
+        const { allSquare, willMove, whiteTurn, check } = this.state;
         return (
             <div className="board">
                 {allSquare.length > 0 && allSquare.map((item, x) => (
@@ -633,6 +650,15 @@ export default class Board extends Component {
                     </div>
 
                 ))}
+                {check !== '' && <div className="result-notify">
+                    <BackdropFilter className="result-notify-1" filter={"blur(10px)"}>
+                        <img src={check === 'You' ? winnerImg : loseImg} />
+                        <h1>{check === 'Com' ? 'WIN' : 'LOSE'}</h1>
+                        <Link to="/playwithai">
+                            <button>OK</button>
+                        </Link>
+                    </BackdropFilter>
+                </div>}
             </div>
         )
     }

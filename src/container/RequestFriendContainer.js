@@ -8,7 +8,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     fetchListRequestFriends: () => {
-        debugger;
         dispatch(fetchListRequestFriends());
     },
 })

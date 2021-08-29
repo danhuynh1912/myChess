@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchFriend } from '../redux/friend/actions';
+import { fetchFriend, unfriend } from '../redux/friend/actions';
 import Friends from '../components/Friends';
 
 const mapStateToProps = (state) => ({
@@ -10,6 +10,9 @@ const mapDispatchToProps = (dispatch) => ({
     fetchFriend: () => {
         dispatch(fetchFriend());
     },
+    unfriend: (id) => {
+        dispatch(unfriend(id));
+    }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

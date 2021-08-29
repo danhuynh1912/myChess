@@ -42,11 +42,10 @@ export default class Nav extends Component {
     }
 
     clearStorage = () => {
-        localStorage.removeItem("list");
+        localStorage.setItem("list", JSON.stringify({playerID: -1}));
     }
 
     render() {
-        debugger;
         const pathname = window.location.pathname;
         console.log(pathname);
         return <div className='navigation'>

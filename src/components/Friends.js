@@ -32,22 +32,25 @@ export default class Lesson extends Component {
     //     }
     // }
 
+    unfriend = (id) => {
+        this.props.unfriend(id);
+    }
+
     render() {
         const { friends } = this.props;
-        debugger;
         return <div className='lesson row'>
             <div className='col-8'>
                 <div class="friend-avt row">
-                    {friends && friends.map(item => <div className="col-6">
+                    {friends && friends.length > 0 ? friends.map(item => <div className="col-6">
                         <div className='yourfriends friend-info'>
                             <img className="friend-avtimg" src={item.img} alt="" />
                             <div className='name-id'>
                                 <p className='friend-name'>{item.name}</p>
                                 <span className='friend-id'>{item.email}</span>
                             </div>
-                            <Button id={item.id} type="button">
-                                <img src={optionfriend} />
-                            </Button>
+                            <div className="list-button" style={{display: 'flex'}}>
+                                <button onClick={() => this.unfriend(item.playerID)}>Unfriend</button>
+                            </div>
                             {/*<UncontrolledPopover trigger="legacy" placement="bottom" target={item.id}>
                                 <PopoverBody>
                                     <button className="option-button unfriend">Unfriend</button>
@@ -55,7 +58,7 @@ export default class Lesson extends Component {
                                 </PopoverBody>
                             </UncontrolledPopover>*/}
                         </div>
-                    </div>)}
+                    </div>) : <div>Bạn chưa kết bạn với bất kỳ ai</div>}
                 </div>
             </div>
             <div className='col-4'>

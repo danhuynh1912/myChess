@@ -26,7 +26,7 @@ export default class Login extends Component {
     checkLogin = () => {
         const user1 = this.props.users.find(item => item.email === this.email.current.value && item.password === this.password.current.value);
         this.setState({user: user1});
-        this.props.getUser([user1]);
+        // this.props.getUser([user1]);
         debugger;
         localStorage.setItem("list", JSON.stringify(user1));
     }
@@ -64,9 +64,9 @@ export default class Login extends Component {
                                 </label>
                                 <span>Remember me</span>
                             </div>
-                            <Link  onClick={this.checkLogin} to={user !== undefined ? "/" : "/login"}>
+                            <a onClick={this.checkLogin} href={user !== undefined ? "/" : "/login"}>
                                 <button className="button-login">Login</button>
-                            </Link>
+                            </a>
                             <p>Not registered yet? <Link to="/register">Create an Account</Link></p>
                             {user === undefined && <p>Bạn chưa nhập tài khoản hoặc mật khẩu</p> }
                         </div>

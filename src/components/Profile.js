@@ -11,19 +11,19 @@ import {
 
 export default class Profile extends Component {
     render() {
-        const { aiGames } = this.props;
+        const m = JSON.parse(localStorage.getItem("list"));
         return <div className='aiplay'>
             <div className='row'>
                 <div className='col-8'>
                     <div className="avatar">
-                        <img src={avt1} />
+                        <img src={m.img} />
                         <div className="avatar-info">
                             <div className="name-info">
-                                <h4>Peter Parker</h4>
-                                <p>danhuynh1912@gmail.com</p>
+                                <h4>{m.name}</h4>
+                                <p>{m.email}</p>
                             </div>
                             <div className="score">
-                                <h3>1429</h3>
+                                <h3>Point: {m.point}</h3>
                             </div>
                         </div>
                     </div>

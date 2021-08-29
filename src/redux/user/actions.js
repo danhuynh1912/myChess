@@ -1,6 +1,7 @@
 import {SET_USERS} from './actionType';
 import {FETCH_USERS} from './actionType';
 import {GET_USER} from './actionType';
+import {SEND_FRIENDS} from './actionType';
 
 export const setUsers = (data) => ({
     type: SET_USERS,
@@ -13,5 +14,10 @@ export const fetchUsers = () => ({
 
 export const getUser = (item) => ({
     type: GET_USER,
-    payload: item
+    item,
 });
+
+export const senRequestFriend = (id) => ({
+    type: SEND_FRIENDS,
+    payload:id
+})

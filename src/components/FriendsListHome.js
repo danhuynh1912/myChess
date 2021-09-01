@@ -20,7 +20,7 @@ class FriendListHome extends Component {
             <Link to=''>
                 <h5>Friends (3)</h5>
             </Link>
-            <div className='friend-avt'>
+            {/* <div className='friend-avt'>
                 { friends.length > 0 && friends.map(item => <div className='friend-info'>
                     <img className="friend-avtimg" src={item.img} alt="" />
                     <div className='name-id'>
@@ -28,7 +28,7 @@ class FriendListHome extends Component {
                         <span className='friend-id'>{item.email}</span>
                     </div>
                 </div>) }
-            </div>
+            </div> */}
                 
         </div>
     }

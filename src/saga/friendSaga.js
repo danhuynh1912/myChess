@@ -4,7 +4,8 @@ import {GET_FRIEND, UNFRIEND} from "../redux/friend/actionType";
 import {FETCH_FRIEND} from "../redux/friend/actionType";
 
 const m = JSON.parse(localStorage.getItem("list"));
-const url = `/api/get-list-friends?playerID=${m.playerID}`;
+// const url = `/api/get-list-friends?playerID=${m.playerID}`;
+const url = '';
 const urlUf = "/api/unfriend";
 
 function* setData() {

@@ -1,0 +1,76 @@
+import React, { Component } from 'react';
+
+import '../static/Nav.css';
+
+import homeHome from '../static/images/homeHome.svg';
+import homeActive from '../static/images/homeActive.svg';
+import humanHome from '../static/images/humanHome.svg';
+import humanHomeActive from '../static/images/humanHomeActive.svg';
+import aiHome from '../static/images/aiHome.svg';
+import aiHomeActive from '../static/images/aiHomeActive.svg';
+import lessonHome from '../static/images/lessonHome.svg';
+import article from '../static/images/article.svg';
+import seehistory from '../static/images/seehistory.svg';
+import logout from '../static/images/logout.svg';
+import lessonHomeActive from '../static/images/lessonHomeActive.svg';
+import articleActive from '../static/images/articleActive.svg';
+import seehistoryActive from '../static/images/seehistoryActive.svg';
+import friends from '../static/images/friends.svg';
+import friendsActive from '../static/images/friendsActive.svg';
+import users from '../static/images/users.svg';
+import usersActive from '../static/images/usersActive.svg';
+import blog from '../static/images/blog.svg';
+import requests from '../static/images/requests.svg';
+import requestsActive from '../static/images/requestsActive.svg';
+
+import {
+    Link
+} from "react-router-dom";
+
+export default class Nav extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentPage: ""
+        }
+    }
+
+    activePage(value){
+        this.setState({
+            currentPage: value
+        })
+    }
+
+    render() {
+        const pathname = window.location.pathname;
+        console.log(pathname);
+        return <div className='navigation'>
+            <div className='logo'>
+                <h2>Admin</h2>
+            </div>
+            <nav>
+                <p className='menu-title'>Menu</p>
+                <ul>
+                    <li className={pathname === "/lesson-admin"? "nav-active":""} onClick={() => this.activePage(pathname)}>
+                        <Link to="/lesson-admin">
+                            <img src={pathname === "/lesson-admin"? lessonHomeActive:lessonHome} alt="" />
+                            <span>Lesson</span>
+                        </Link>
+                    </li>
+                    <li className={pathname === "/article-admin"? "nav-active":""} onClick={() => this.activePage(pathname)}>
+                        <Link to="/article-admin">
+                            <img src={pathname === "/article-admin"? articleActive:article} alt="" />
+                            <span>Article</span>
+                        </Link>
+                    </li>
+                    <li className={pathname === "/account-admin"? "nav-active":""} onClick={() => this.activePage(pathname)}>
+                        <Link to="/account-admin">
+                            <img src={pathname === "/account-admin"? usersActive:users} alt="" />
+                            <span>Account</span>
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+}

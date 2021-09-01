@@ -1,0 +1,34 @@
+/* body {
+    background: none !important;
+} */
+
+.three-cards {
+    margin-bottom: 25px;
+}
+
+.cards-admin {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 3px 7px 0px rgb(160 160 160 / 24%);
+}
+
+.card-account {
+    background: #ecfff0;
+}
+
+.card-lesson {
+    background: #f6f1ff;
+}
+
+.card-article {
+    background: #fff2ec;
+}
+
+.game-list h5 {
+    font-weight: 600;
+}
+
+.action-admin img{
+    width: 20px;
+    margin: 0 5px;
+}

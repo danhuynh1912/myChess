@@ -22,7 +22,9 @@ export default class ChoseLevelAi extends Component {
     componentDidMount() {
         let newDate = new Date()
         let date = newDate.getDate();
-        this.game.date = date;
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        this.game.date = `${date}-${month}-${year}`;
     }
 
     getTime = (time) => {

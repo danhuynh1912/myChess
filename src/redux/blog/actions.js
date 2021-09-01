@@ -2,7 +2,7 @@ import { ADD_BLOG } from './actionType';
 import { LIKE_BLOG } from './actionType';
 import { DISLIKE_BLOG } from './actionType';
 import {FETCH_BLOG } from './actionType';
-import {SET_BLOG } from './actionType';
+import {SET_BLOG, SET_REACT_BLOG, FETCH_REACT_BLOG } from './actionType';
 
 export const addBlog = (item) => ({
     type: ADD_BLOG,
@@ -24,6 +24,15 @@ export const setBlog = (data) => ({
     payload: data
 });
   
-export const fetchLessons = () => ({
+export const fetchBlog = () => ({
     type: FETCH_BLOG,
 });
+
+export const setReactBlog = (data) => ({
+    type: SET_REACT_BLOG,
+    payload: data,
+})
+
+export const fetchReactBlog = () => ({
+    type: FETCH_REACT_BLOG,
+})

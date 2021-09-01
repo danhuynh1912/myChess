@@ -4,8 +4,8 @@ import {GET_FRIEND, UNFRIEND} from "../redux/friend/actionType";
 import {FETCH_FRIEND} from "../redux/friend/actionType";
 
 const m = JSON.parse(localStorage.getItem("list"));
-// const url = `/api/get-list-friends?playerID=${m.playerID}`;
-const url = '';
+const url = `/api/get-list-friends?playerID=${m.playerID}`;
+// const url = '';
 const urlUf = "/api/unfriend";
 
 function* setData() {
@@ -18,7 +18,7 @@ function* fetchData() {
   while(true) {
     const action = yield take(UNFRIEND);
     yield fork(unFr, action);
-  }
+  } 
 }
 
 function* unFr(action) {

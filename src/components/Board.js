@@ -11,6 +11,7 @@ import { pieceMove } from '../howToPlay/howToPlay';
 
 import winnerImg from '../static/images/winner.svg'
 import loseImg from '../static/images/lose.svg'
+import axios from 'axios';
 
 const WHITE_PIECE = 'WHITE_PIECE';
 const BLACK_PIECE = 'BLACK_PIECE';
@@ -483,7 +484,6 @@ export default class Board extends Component {
                         _allSquare[i][j].currentPiece = allSquare[i][j].currentPiece;
                         _allSquare[i][j].pieceColor = allSquare[i][j].pieceColor;
                         _allSquare[i][j].pieceValue = allSquare[i][j].pieceValue;
-
                         _allSquare[_AIPieces[n].x][_AIPieces[n].y].currentPiece = AIPieces[n].currentPiece;
                         _allSquare[_AIPieces[n].x][_AIPieces[n].y].pieceColor = AIPieces[n].pieceColor;
                         _allSquare[_AIPieces[n].x][_AIPieces[n].y].pieceValue = AIPieces[n].pieceValue;
@@ -630,7 +630,23 @@ export default class Board extends Component {
         return result;
     }
 
-    render() {
+    saveAiGame = (check) => {
+        const winner = check === 'Com' ? 1 : 0;
+        const {aiGames} = this.props;
+        aiGames[0].winner = winner;
+
+        const userLogin = JSON.parse(localStorage.getItem("list"));
+        debugger;
+        axios.post('/api/save-aigame', {
+            playerID: userLogin.playerID, 
+            time: parseInt(aiGames[0].time), 
+            result: aiGames[0].winner,
+            moves: 1, 
+            level: aiGames[0].level,
+        })
+    }
+
+    render() {  
         const { allSquare, willMove, whiteTurn, check } = this.state;
         return (
             <div className="board">
@@ -650,12 +666,12 @@ export default class Board extends Component {
                     </div>
 
                 ))}
-                {check !== '' && <div className="result-notify">
+                {check === '' && <div className="result-notify">
                     <BackdropFilter className="result-notify-1" filter={"blur(10px)"}>
-                        <img src={check === 'You' ? winnerImg : loseImg} />
+                        <img src={check === 'Com' ? winnerImg : loseImg} />
                         <h1>{check === 'Com' ? 'WIN' : 'LOSE'}</h1>
                         <Link to="/playwithai">
-                            <button>OK</button>
+                            <button onClick={() => this.saveAiGame(check)}>OK</button>
                         </Link>
                     </BackdropFilter>
                 </div>}

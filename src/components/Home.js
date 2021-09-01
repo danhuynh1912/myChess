@@ -10,7 +10,7 @@ import Nav from './Nav';
 import HomePage from './HomePage';
 import PlayWithHuman from './PlayWithHuman';
 import Profile from './Profile';
-import HistoryPage from './HistoryPage';
+import HistoryContainer from '../container/HistoryContainer';
 import FriendContainer from '../container/FriendsContainer';
 import UserContainer from '../container/UserContainer';
 import BlogContainer from '../container/BlogContainer';
@@ -50,7 +50,7 @@ export default class Home extends Component {
                         <Profile />
                     </Route>
                     <Route path="/history">
-                        <HistoryPage />
+                        <HistoryContainer />
                     </Route>
                     <Route path="/users">
                         <UserContainer />

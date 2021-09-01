@@ -57,7 +57,7 @@ export default class PlayWithAI extends Component {
         return <div className='aiplay'>
             <div className='row'>
                 <div className='col-8 center-board'>
-                    <Board runTime={this.runTime} />
+                    <Board runTime={this.runTime} aiGames={this.props.aiGames} />
                 </div>
                 <div className='col-4'>
                     <TimeCountContainer 

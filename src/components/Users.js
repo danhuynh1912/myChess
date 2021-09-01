@@ -21,6 +21,7 @@ export default class Lesson extends Component {
         this.props.fetchFriend();
         this.props.fetchListRequestFriends();
         this.props.fecthListReceivedFriend();
+        debugger;
     }
 
     onAddFriend = (requestID, item) => {
@@ -32,7 +33,7 @@ export default class Lesson extends Component {
 
     render() {
         const { user } = this.state;
-        const {listRequestFriends, friends, users, listReceivedFriends } = this.props;
+        const { friends, users, listReceivedFriends, listRequestFriends } = this.props;
         debugger;
         let listUsers = [];
         if(users.length > 0){
@@ -56,9 +57,15 @@ export default class Lesson extends Component {
                                 <span className='friend-id'>{item.email}</span>
                             </div>
                             <div className="list-button" style={{display: 'flex'}}>
-                                {friends.find(m => m.playerID === item.playerID) ? 
-                                    <div style={{color: '#5b78e2', marginTop: 10}}>Đã là bạn bè</div> : 
-                                    <button onClick={() => this.onAddFriend(item.playerID, item)}>Add</button>}
+                                {listRequestFriends.find(m => m.playerID === item.playerID) && <div style={{color: '#5b78e2', marginTop: 10}}>Chờ bạn xác nhận</div>}
+                                {
+                                    !listRequestFriends.find(m => m.playerID === item.playerID) && 
+                                    (
+                                        friends.find(m => m.playerID === item.playerID) ? 
+                                        <div style={{color: '#5b78e2', marginTop: 10}}>Đã là bạn bè</div> : 
+                                        <button onClick={() => this.onAddFriend(item.playerID, item)}>Add</button>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

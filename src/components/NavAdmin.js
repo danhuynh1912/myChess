@@ -2,26 +2,13 @@ import React, { Component } from 'react';
 
 import '../static/Nav.css';
 
-import homeHome from '../static/images/homeHome.svg';
-import homeActive from '../static/images/homeActive.svg';
-import humanHome from '../static/images/humanHome.svg';
-import humanHomeActive from '../static/images/humanHomeActive.svg';
-import aiHome from '../static/images/aiHome.svg';
-import aiHomeActive from '../static/images/aiHomeActive.svg';
 import lessonHome from '../static/images/lessonHome.svg';
 import article from '../static/images/article.svg';
-import seehistory from '../static/images/seehistory.svg';
 import logout from '../static/images/logout.svg';
 import lessonHomeActive from '../static/images/lessonHomeActive.svg';
 import articleActive from '../static/images/articleActive.svg';
-import seehistoryActive from '../static/images/seehistoryActive.svg';
-import friends from '../static/images/friends.svg';
-import friendsActive from '../static/images/friendsActive.svg';
 import users from '../static/images/users.svg';
 import usersActive from '../static/images/usersActive.svg';
-import blog from '../static/images/blog.svg';
-import requests from '../static/images/requests.svg';
-import requestsActive from '../static/images/requestsActive.svg';
 
 import {
     Link
@@ -41,6 +28,10 @@ export default class Nav extends Component {
         })
     }
 
+    clearStorage = () => {
+        localStorage.setItem("list", JSON.stringify({playerID: -1}));
+    }
+
     render() {
         const pathname = window.location.pathname;
         console.log(pathname);
@@ -51,6 +42,12 @@ export default class Nav extends Component {
             <nav>
                 <p className='menu-title'>Menu</p>
                 <ul>
+                <li className={pathname === "/admin"? "nav-active":""} onClick={() => this.activePage(pathname)}>
+                        <Link to="/admin">
+                            <img src={pathname === "/admin"? lessonHomeActive:lessonHome} alt="" />
+                            <span>Admin</span>
+                        </Link>
+                    </li>
                     <li className={pathname === "/lesson-admin"? "nav-active":""} onClick={() => this.activePage(pathname)}>
                         <Link to="/lesson-admin">
                             <img src={pathname === "/lesson-admin"? lessonHomeActive:lessonHome} alt="" />
@@ -67,6 +64,17 @@ export default class Nav extends Component {
                         <Link to="/account-admin">
                             <img src={pathname === "/account-admin"? usersActive:users} alt="" />
                             <span>Account</span>
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
+            <nav>
+                <p className='menu-title account-menu'>Account</p>
+                <ul>
+                    <li>
+                        <Link onClick={this.clearStorage} to="/login">
+                            <img src={logout} alt=""/>
+                            <span>Sign out</span>
                         </Link>
                     </li>
                 </ul>

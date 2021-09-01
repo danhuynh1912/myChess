@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import '../static/Login.css';
 // import '../static/ChoseLevelAi.css';
-import logo from '../static/images/logo.png'
-import axios from 'axios';
 
 import {
     Link
@@ -26,9 +24,12 @@ export default class Login extends Component {
     checkLogin = () => {
         const user1 = this.props.users.find(item => item.email === this.email.current.value && item.password === this.password.current.value);
         this.setState({user: user1});
-        // this.props.getUser([user1]);
         debugger;
-        localStorage.setItem("list", JSON.stringify(user1));
+        if(user1){
+            localStorage.setItem("list", JSON.stringify(user1));
+        } else {
+            alert(" Wrong username or password !")
+        }
     }
 
     render() {

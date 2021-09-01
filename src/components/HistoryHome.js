@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchHistory } from '../redux/history/actions';
 
-export default class HistoryHome extends Component {
+class HistoryHome extends Component {
 
-    async componentDidMount() {
-        const history = await axios.get(`/api/get-all-aigame`);
+    componentDidMount() {
+        this.props.fetchHistory();
     }
 
     render() {
+        const {history} = this.props;
         const games = [
             { opponent: 'danhuynh', result: 'win', moves: '26', date: 'Jun 29, 2021' },
             { opponent: 'tuananh297', result: 'lose', moves: '30', date: 'Jun 29, 2021' },
@@ -16,32 +18,49 @@ export default class HistoryHome extends Component {
             { opponent: 'danhuynh', result: 'win', moves: '40', date: 'Jun 12, 2021' },
         ]
         return <div className='history-home'>
-            <h5>Game history</h5>
+            <h5>History of the last 4 games</h5>
             <Table responsive className='table-history'>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Opponent</th>
+                        <th>Level</th>
                         <th>Result</th>
-                        <th>Moves</th>
+                        <th>Times</th>
                         <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {games.length > 0 && games.map((item, index) => <tr>
-                        <td>{index + 1}</td>
-                        <td key={index}>{item.opponent}</td>
-                        {/* <td key={index}>{item.result}</td> */}
-                        <td key={index}>
-                            <p className={item.result === 'win'? 'game-result win':'game-result lose'}>
-                                {item.result === 'win'? 'W':'L'}
-                            </p>
-                        </td>
-                        <td key={index}>{item.moves}</td>
-                        <td key={index}>{item.date}</td>
-                    </tr>)}
+                    {history.length > 0 && history.map((item, index) => {
+                        if(index >= history.length - 4)
+                        return (
+                            <tr>
+                                <td></td>
+                                <td key={index}>{item.level}</td>
+                                {/* <td key={index}>{item.result}</td> */}
+                                <td key={index}>
+                                    <p className={item.result === true ? 'game-result win':'game-result lose'}>
+                                        {item.result === true ? 'W':'L'}
+                                    </p>
+                                </td>
+                                <td key={index}>{item.time} minutes</td>
+                                <td key={index}>{new Date(item.createdAt).toLocaleString()}</td>
+                            </tr>
+                        )
+                    } )}
                 </tbody>
             </Table>
         </div>
     }
 }
+
+const mapStateToProps = (state) => ({
+    history: state.history.history,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    fetchHistory: () => {
+        dispatch(fetchHistory());
+    },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryHome);

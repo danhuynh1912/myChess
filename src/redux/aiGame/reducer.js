@@ -8,6 +8,7 @@ const aiGameInitState = {
 const aiGameReducer = (state = aiGameInitState, action) => {
     switch(action.type) {
         case ADD_GAME: {
+            debugger;
             return {
                 ...state,
                 aiGames: [

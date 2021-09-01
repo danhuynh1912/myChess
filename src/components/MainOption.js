@@ -12,17 +12,16 @@ import {
 export default class Home extends Component {
     render() {
         const mainOptions = [
-            {title: 'Ai', thump: option1},
-            {title: 'Human', thump: option2},
-            {title: 'History', thump: option3},
-            {title: 'Lesson', thump: option4},
+            {title: 'Ai', thump: option1, route: 'playwithai'},
+            {title: 'History', thump: option3, route: 'history'},
+            {title: 'Lesson', thump: option4, route: 'lesson'},
         ]
         return <div className='main-option'>
             <h5>Option</h5>
             <div className='row option-main'>
                 { mainOptions.length > 0 && mainOptions.map(item => <div className='col-3'>
                     <div className='an-option'>
-                        <Link to='/playwithai'>
+                        <Link to={`/${item.route}`}>
                             <img src={item.thump} alt=""/>
                             <p>{item.title}</p>
                         </Link>

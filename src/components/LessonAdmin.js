@@ -11,13 +11,30 @@ import updateAdmin from '../static/images/updateAdmin.svg';
 import '../static/History.css';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import axios from 'axios';
 
 export default class LessonAdmin extends Component {
     constructor(props) {
         super();
         this.state = {
             modalAdd: false,
-            modalUpdate: false
+            modalUpdate: false,
+            lesson: [],
+            lessonID: '',
+        }
+        this.title = React.createRef();
+        this.content = React.createRef();
+    }
+
+    componentDidMount() {
+        this.props.fetchLessons();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.lessons !== this.props.lessons){
+            this.setState({
+                lesson: this.props.lessons,
+            })
         }
     }
 
@@ -27,11 +44,48 @@ export default class LessonAdmin extends Component {
         })
     };
 
-    toggleUpdate = () => {
+    toggleUpdate = (lessonID) => {
         this.setState({
-            modalUpdate: !this.state.modalUpdate
+            modalUpdate: !this.state.modalUpdate,
+            lessonID: lessonID,
         })
     };
+
+    addLesson = () => {
+        axios.post('/api/create-lesson', {title: this.title.current.value, content: this.content.current.value, thumbnail: 'https://source.unsplash.com/300x225/?chess'})
+        const {lesson} = this.state;
+        lesson.push({
+            title: this.title.current.value,
+            content: this.content.current.value,
+            thumbnail: 'https://source.unsplash.com/300x225/?chess',
+        })
+        debugger;
+        this.setState({
+            lesson,
+        })
+    }
+
+    editLesson = () => {
+        const {lessonID} = this.state;
+        axios.put('/api/edit-lesson', {lessonID: lessonID ,title: this.title.current.value, content: this.content.current.value, thumbnail: 'https://source.unsplash.com/300x225/?chess'})
+        const {lesson} = this.state;
+        lesson.find(item => item.lessonID === lessonID).title = this.title.current.value;
+        lesson.find(item => item.lessonID === lessonID).content = this.content.current.value;
+        debugger;
+        this.setState({
+            lesson,
+        })
+    }
+
+    deleteLesson = (lessonID) => {
+        axios.delete('/api/delete-lesson', {data: {lessonID: lessonID}})
+        const {lesson} = this.state;
+        const indexremove = lesson.findIndex(item => item.lessonID === lessonID)
+        lesson.splice(indexremove, 1);
+        this.setState({
+            lesson,
+        })
+    }
 
 
     render() {
@@ -41,40 +95,31 @@ export default class LessonAdmin extends Component {
             { level: 'Level 3', result: 'win', moves: '15', date: 'Jun 29, 2021' },
             { level: 'Level 2', result: 'win', moves: '40', date: 'Jun 12, 2021' },
         ]
+        const {lesson} = this.state;
         return <div className='lesson row'>
             <div className='col-8'>
                 <div className="game-list">
                     <Table responsive className='table-history history-page'>
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Level</th>
-                                <th>Resultámdlkasmdlkm</th>
-                                <th>Moves</th>
-                                <th>Date</th>
-                                <th>Action</th>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Image</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {games.length > 0 && games.map((item, index) => <tr>
-                                <td>{index + 1}</td>
-                                <td key={index}>{item.level}</td>
-                                {/* <td key={index}>{item.result}</td> */}
-                                <td key={index}>
-                                    <p className={item.result === 'win' ? 'game-result win' : 'game-result lose'}>
-                                        {item.result === 'win' ? 'W' : 'L'}
-                                    </p>
-                                </td>
-                                <td key={index}>{item.moves}</td>
-                                <td key={index}>{item.date}</td>
+                            {lesson.length > 0 && lesson.map((item, index) => <tr>
+                                <td key={index}>{item.title}</td>
+                                <td key={index}>{item.content}</td>
+                                <td key={index}></td>
                                 <td key={index} className="action-admin">
-                                    <img src={updateAdmin} onClick={this.toggleUpdate} />
-                                    <img src={removeAdmin} />
+                                    <img alt="" src={updateAdmin} onClick={() => this.toggleUpdate(item.lessonID)} />
+                                    <img alt="" src={removeAdmin} onClick={() => this.deleteLesson(item.lessonID)} />
                                 </td>
                             </tr>)}
                             <tr>
                                 <th className="action-admin">
-                                    <img src={addAdmin} onClick={this.toggleAdd} />
+                                    <img alt="" src={addAdmin} onClick={this.toggleAdd} />
                                 </th>
                             </tr>
                         </tbody>
@@ -88,31 +133,17 @@ export default class LessonAdmin extends Component {
                 <ModalBody>
                     <Form>
                         <FormGroup>
-                            <Label for="exampleEmail">Email</Label>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+                            <Label for="exampleEmail">Title</Label>
+                            <Input type="title" name="title" placeholder="with a placeholder" ref={this.title} />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="examplePassword">Password</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="exampleSelect">Select</Label>
-                            <Input type="select" name="select" id="exampleSelect">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="exampleText">Text Area</Label>
-                            <Input type="textarea" name="text" id="exampleText" />
+                            <Label for="examplePassword">Content</Label>
+                            <Input type="content" name="content" placeholder="password placeholder" ref={this.content} />
                         </FormGroup>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="postbutton" color="primary" onClick={this.addBlogFunction}>Post</Button>{' '}
+                    <Button className="postbutton" color="primary" onClick={this.addLesson}>Post</Button>{' '}
                     <Button color="secondary" onClick={this.toggleAdd}>Cancel</Button>
                 </ModalFooter>
             </Modal>
@@ -124,42 +155,22 @@ export default class LessonAdmin extends Component {
                 <ModalBody>
                     <Form>
                         <FormGroup>
-                            <Label for="exampleEmail">Email</Label>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+                            <Label for="exampleEmail">Title</Label>
+                            <Input type="title" name="title" placeholder="with a placeholder" ref={this.title} />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="examplePassword">Password</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="exampleSelect">Select</Label>
-                            <Input type="select" name="select" id="exampleSelect">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="exampleText">Text Area</Label>
-                            <Input type="textarea" name="text" id="exampleText" />
+                            <Label for="examplePassword">Content</Label>
+                            <Input type="content" name="content" placeholder="password placeholder" ref={this.content} />
                         </FormGroup>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="postbutton" color="primary" onClick={this.addBlogFunction}>Post</Button>{' '}
+                    <Button className="postbutton" color="primary" onClick={() => this.editLesson()}>Post</Button>{' '}
                     <Button color="secondary" onClick={this.toggleUpdate}>Cancel</Button>
                 </ModalFooter>
             </Modal>
 
 
-            <div className='col-4'>
-                <div className='article-rightcontent'>
-                    <FriendsListHome />
-                    <ContactUs />
-                </div>
-            </div>
         </div>
     }
 }

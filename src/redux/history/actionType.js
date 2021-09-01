@@ -1,0 +1,2 @@
+export const SET_HISTORY = "SET_HISTORY";
+export const FETCH_HISTORY = "FETCH_HISTORY";

@@ -5,9 +5,20 @@ import articlesReducer from "./articlesSaga";
 import friendSaga from "./friendSaga";
 import listFriendsRequestSaga from "./listFriendsRequestSaga";
 import listFriendsReceivedSaga from "./listReceivedFriendsSaga";
+import blogSaga from "./blogSaga";
+import historySaga from "./historySaga";
 
 function* rootSaga() {
-    yield all([userSaga(), lessonSaga(), articlesReducer(), listFriendsRequestSaga(), friendSaga(), listFriendsReceivedSaga()]);
+    yield all([
+        userSaga(), 
+        lessonSaga(), 
+        articlesReducer(), 
+        listFriendsRequestSaga(), 
+        friendSaga(), 
+        listFriendsReceivedSaga(), 
+        blogSaga(),
+        historySaga()
+    ]);
 }
 
 export default rootSaga;

@@ -5,9 +5,7 @@ import '../static/Friends.css'
 
 import ContactUs from './ContactUs';
 import FriendsListHome from './FriendsListHome';
-
-import friend1 from '../static/images/friend1.jpeg';
-import friend2 from '../static/images/friend2.jpeg';
+import axios from 'axios';
 
 export default class Requests extends Component {
     constructor() {
@@ -32,8 +30,13 @@ export default class Requests extends Component {
         }
     }
 
+    confirmRequest = (playerID) => {
+        const m = JSON.parse(localStorage.getItem("list"));
+        axios.put("/api/accept-request", {requesterID: playerID, receiverID: m.playerID});
+        this.props.acceptFriend(playerID);
+    }
+
     render() {
-        const { friends } = this.state;
         const m = this.props.listRequestFriends;
         debugger;
         return <div className='lesson row'>
@@ -44,8 +47,9 @@ export default class Requests extends Component {
                             <img className="card-img-top request-avt" src={item.img} alt="Card image cap" />
                             <div className="card-body">
                                 <h5 className="card-title res-name">{item.name}</h5>
-                                <a href="#" className="btn btn-primary twobtn confirm">Confirm</a>
-                                <a href="#" className="btn btn-primary twobtn delete-res">Delete</a>
+                                <button onClick={() => this.confirmRequest(item.playerID)} className="btn btn-primary twobtn confirm">
+                                    Confirm
+                                </button>
                             </div>
                         </div>
                     </div>) : <div style={{margin: 50, fontSize: 30}}>Không có lời mời kết bạn nào </div>}

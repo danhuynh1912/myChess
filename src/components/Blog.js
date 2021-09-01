@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import { nanoid } from 'nanoid'
 import '../static/Blog.css';
 import avt from '../static/images/avt1.jpeg';
-import friend1 from '../static/images/friend1.jpeg';
-import friend2 from '../static/images/friend2.jpeg';
-import friend3 from '../static/images/friend3.jpeg';
 import like from '../static/images/like.svg';
 import likedImg from '../static/images/liked.svg';
-import comment from '../static/images/comment.svg';
 import saved from '../static/images/saved.svg';
 
 import ContactUs from './ContactUs';
@@ -15,9 +11,6 @@ import FriendsListHome from './FriendsListHome';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import {
-    Link
-} from "react-router-dom";
 import axios from 'axios';
 
 export default class Blog extends Component {
@@ -30,14 +23,25 @@ export default class Blog extends Component {
                 avt: avt,
                 userName: 'Huỳnh Ngọc Danh'
             },
-            blogLists : [],
+            blogList : [],
             playerList: [],
         }
         this.textInputRef = React.createRef();
     }
 
     componentDidMount(){
-        
+        this.props.fetchBlog();
+        this.props.fetchUsers();
+        this.props.fetchFriend();
+        debugger;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.blogList !== this.props.blogList){
+            this.setState({
+                blogList: this.props.blogList,
+            })
+        }
     }
 
     toggle = () => {
@@ -47,66 +51,141 @@ export default class Blog extends Component {
     };
 
     addBlogFunction = () => {
-        const { user } = this.state;
+        const {blogList} = this.state;
         let content = this.textInputRef.current.value;
-        content ? this.props.addBlog({ blogId: nanoid(),like: 0, comment: [], saved: 0, userId: user.userId, avt: user.avt, userName: user.userName, content: content }) : alert('You have to say something!');
+        this.setState({
+
+        })
+        const m = JSON.parse(localStorage.getItem("list"));
+        content ? axios.post("/api/create-blog", {content: content, image: "", playerID: m.playerID}) : alert("You have to say something !");
+        blogList.push({ 
+            blogID: blogList.length + 1,
+            playerID: m.playerID,
+            content: content,
+            image: null,
+            createdAt: "2021-08-29T12:37:14.000Z",
+            updatedAt: "2021-08-29T12:37:14.000Z",
+            reactData: [],
+        })
         this.toggle();
     }
 
     likedCount = (item) => {
-        const { liked } = this.props;
-        let count=0;
-        for(let i=0; i<liked.length; i++) {
-            if(liked[i].blogId === item.blogId) count++;
-        }
-        return count;
+        // const { liked } = this.props;
+        // let count=0;
+        // for(let i=0; i<liked.length; i++) {
+        //     if(liked[i].blogId === item.blogId) count++;
+        // }
+        // return count;
+
     }
 
-    likeBlogFunction = (blogId) => {
-        const { liked, likeBlog, disLikeBlog } = this.props;
-        let count = 0;
-        let index = -1;
-        for(let i=0; i<liked.length; i++) {
-            if(liked[i].blogId === blogId && liked[i].liker === this.state.userId) {
-                index = i;
-                count ++;
-            };
+    disLikeBlogFunction = (blogId, youDislike) => {
+        const {blogList} = this.state;
+        const m = JSON.parse(localStorage.getItem("list"));
+        if(!youDislike){
+            debugger;
+            axios.post('/api/react-blog/0', {playerID: m.playerID, blogID: blogId});
+            let blog = blogList.find(item => item.blogID === blogId);
+            console.log(blog);
+            const removeIndex = blog.reactData.findIndex(item1 => item1.Reacts.playerID === m.playerID && item1.Reacts.blogID === blogId && item1.Reacts.like === true);
+            removeIndex !== -1 && blog.reactData.splice(removeIndex, 1);
+            blog.reactData.push({
+                playerID: m.playerID,
+                name: "Dũng",
+                img: m.img,
+                Reacts: {
+                    playerID: m.playerID,
+                    blogID: blogId,
+                    like: false,
+                    "createdAt": "2021-08-31T06:10:04.000Z",
+                    "updatedAt": "2021-08-31T06:10:04.000Z"
+                }
+            })
+            this.setState({
+                blogList,
+            })
+        } else {
+            axios.delete(`/api/unreact-blog?playerID=${m.playerID}&blogID=${blogId}`);
+            let blog = blogList.find(item => item.blogID === blogId);
+            console.log(blog);
+            const removeIndex = blog.reactData.findIndex(item1 => item1.Reacts.playerID === m.playerID && item1.Reacts.blogID === blogId && item1.Reacts.like === false);
+            removeIndex !== -1 && blog.reactData.splice(removeIndex, 1);
+            debugger;
+            this.setState({
+                blogList,
+            })
         }
-        if(count === 0) {
-            likeBlog({blogId: blogId, liker: this.state.userId});
-        }
-        else {
-            disLikeBlog(index);
+    }
+
+    likeBlogFunction = (blogId, youLike) => {
+        const {blogList} = this.state;
+        const m = JSON.parse(localStorage.getItem("list"));
+        debugger;
+        if(!youLike){
+            axios.post('/api/react-blog/1', {playerID: m.playerID, blogID: blogId});
+            let blog = blogList.find(item => item.blogID === blogId);
+            console.log(blog);
+            const removeIndex = blog.reactData.findIndex(item1 => item1.Reacts.playerID === m.playerID && item1.Reacts.blogID === blogId && item1.Reacts.like === false);
+            removeIndex !== -1 && blog.reactData.splice(removeIndex, 1);
+            blog.reactData.push({
+                playerID: m.playerID,
+                name: m.name,
+                img: m.img,
+                Reacts: {
+                  playerID: m.playerID,
+                  blogID: blogId,
+                  like: true,
+                  "createdAt": "2021-08-31T06:10:04.000Z",
+                  "updatedAt": "2021-08-31T06:10:04.000Z"
+                }
+              })
+            this.setState({
+                blogList,
+            })
+        } else {
+            axios.delete(`/api/unreact-blog?playerID=${m.playerID}&blogID=${blogId}`);
+            let blog = blogList.find(item => item.blogID === blogId);
+            console.log(blog);
+            const removeIndex = blog.reactData.findIndex(item1 => item1.Reacts.playerID === m.playerID && item1.Reacts.blogID === blogId && item1.Reacts.like === true);
+            removeIndex !== -1 && blog.reactData.splice(removeIndex, 1);
+            this.setState({
+                blogList,
+            })
         }
     }
 
     checkIfLiked = (blogId) => {
-        const { liked } = this.props;
-        let count = 0;
-        for(let i=0; i<liked.length; i++) {
-            if(liked[i].blogId === blogId && liked[i].liker === this.state.userId) {
-                count ++;
-            };
-        }
-        if(count > 0) {
-            return true
-        }
-        else {
-            return false
-        }
+        
+        // const { liked } = this.props;
+        // let count = 0;
+        // for(let i=0; i<liked.length; i++) {
+        //     if(liked[i].blogId === blogId && liked[i].liker === this.state.userId) {
+        //         count ++;
+        //     };
+        // }
+        // if(count > 0) {
+        //     return true
+        // }
+        // else {
+        //     return false
+        // }
+    }
+
+    removeBlog = (blogID) => {
+        axios.delete("/api/delete-blog", {data: {blogID: blogID}});
+        const {blogList} = this.state;
+        const indexRemove = blogList.findIndex(item => item.blogID === blogID);
+        indexRemove !== -1 && blogList.splice(indexRemove, 1);
+        this.setState({blogList: blogList});
     }
 
     render() {
-        // const blogs = [
-        //     { like: 123, comment: [1, 2, 3, 4], saved: 10, userId: 'danhuynh', avt: avt, userName: 'Huỳnh Ngọc Danh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porta lorem mollis aliquam ut porttitor leo. Semper eget duis at tellus. Tortor id aliquet lectus proin nibh nisl condimentum.' },
-        //     { like: 56, comment: [1, 2], saved: 11, userId: 'ngocanh', avt: friend2, userName: 'Nguyễn Ngọc Anh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae suscipit tellus mauris a. Massa enim nec dui nunc mattis enim.' },
-        //     { like: 10, comment: [3, 4, 10, 5, 6, 6, 4], saved: 20, userId: 'ngocdung', avt: friend1, userName: 'Nguyễn Ngọc Dũng', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-        //     { like: 230, comment: [], saved: 2, userId: 'hieu123', avt: friend3, userName: 'Tống Quang Hiếu', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui sapien eget mi proin. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus. Tempor orci dapibus ultrices in iaculis nunc sed augue. Justo donec enim diam vulputate ut pharetra sit amet aliquam.' },
-        //     { like: 2, comment: [], saved: 1, userId: 'danhuynh', avt: avt, userName: 'Huỳnh Ngọc Danh', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus eget nunc scelerisque viverra mauris in aliquam.' },
-        // ]
-        const { blogList, likeBlog, liked } = this.props;
-
-        const {blogLists} = this.state;
+        const { users, friends } = this.props;
+        const { blogList} = this.state;
+        console.log(blogList);
+        const m = JSON.parse(localStorage.getItem("list"));
+        debugger;
         return <div className='aiplay'>
             <div className='row'>
                 <div className='col-8'>
@@ -116,55 +195,86 @@ export default class Blog extends Component {
                             <Modal isOpen={this.state.modal} toggle={this.toggle} >
                                 <ModalHeader>Create post</ModalHeader>
                                 <ModalBody>
-                                    <textarea ref={this.textInputRef} className="textinput" rows="4" placeholder="What's on your mind, Danh?" >
+                                    <textarea ref={this.textInputRef} className="textinput" rows="4" placeholder="What's on your mind?" >
                                     </textarea>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button className="postbutton" color="primary" onClick={this.addBlogFunction}>Post</Button>{' '}
+                                    <Button className="postbutton" color="primary" onClick={this.addBlogFunction}><a href="/blog" alt="#" style={{color: "white"}}>Post</a></Button>{' '}
                                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                                 </ModalFooter>
                             </Modal>
                         </div>
                         <hr />
                         <div className="post-input">
-                            <img src={avt} alt="avt" />
+                            <img src={m.img} alt="avt" />
                             <Button className="post-button" color="danger" onClick={this.toggle}>What's on your mind?</Button>
                             {/* <input type="text" placeholder="What's on your mind?" /> */}
                         </div>
                     </div>
-                    {blogList.length > 0 && blogList.map((item) => <div className="blog-list">
-                        <div className="user-avt">
-                            <img src={item.avt} alt="avt" />
-                            <div className="user-name">
-                                <h5>{item.userName}</h5>
-                                <p>1 hour</p>
-                            </div>
-                        </div>
-                        <div className="user-content">
-                            <p>{item.content}</p>
-                        </div>
-                        <hr />
-                        <div className="interactive row">
-                            <div className="col-4">
-                                <div className="react" onClick={() => this.likeBlogFunction(item.blogId)}>
-                                    <img src={this.checkIfLiked(item.blogId) === true? likedImg:like} alt="interactive" />
-                                    <p>{this.likedCount(item)} Likes</p>
+                    {blogList.length > 0 && blogList.map((item, index) => {
+                        console.log(item.blogID);
+                        const x1 = item.reactData.filter(item => item.Reacts.like === true)
+                        const x2 = item.reactData.filter(item => item.Reacts.like === false)
+                        debugger;
+                        const youLike = x1.find(f => f.playerID === m.playerID);
+                        const youDislike = x2.find(f => f.playerID === m.playerID);
+                        if(friends.find(m => m.playerID === item.playerID) || m.playerID === item.playerID){
+                            return (
+                                <div className="blog-list">
+                            <div className="user-avt">
+                                <img src={users.find(m => m.playerID === item.playerID) && users.find(m => m.playerID === item.playerID).img} alt="avt" />
+                                <div className="user-name">
+                                    {users.find(m => m.playerID === item.playerID) && <h5>{users.find(m => m.playerID === item.playerID).name}</h5>}
+                                    {users.find(m => m.playerID === item.playerID) && <p>{users.find(m => m.playerID === item.playerID).createdAt}</p>}
+                                </div>
+                                <div className="list-button">
+                                    <button onClick={() => this.removeBlog(item.blogID)}>X</button>
                                 </div>
                             </div>
-                            <div className="col-4">
-                                <div className="react comment">
-                                    <img src={comment} alt="interactive" />
-                                    <p>{item.comment.length} Comments</p>
-                                </div>
+                            <div className="user-content">
+                                <p>{item.content}</p>
                             </div>
-                            <div className="col-4">
-                                <div className="react saved">
-                                    <img src={saved} alt="interactive" />
-                                    <p>{item.saved} Saved</p>
+                            <hr />
+                            <div className="interactive row">
+                                <div className="col-4">
+                                    <div className="react" onClick={() => this.likeBlogFunction(item.blogID, youLike)}>
+                                        <img src={youLike ? likedImg : like} alt="interactive" />
+                                        <p>{x1.length} Likes</p>
+                                        {users.length > 0 && x1.map(item => {
+                                            return (
+                                                <div>
+                                                    <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
+                                                    <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                                <div className="col-4">
+                                    <div className="react comment" onClick={() => this.disLikeBlogFunction(item.blogID, youDislike)}>
+                                        <img src={youDislike ? likedImg:like} alt="interactive" />
+                                        <p>{x2.length} Dislikes</p>
+                                        {users.length > 0 && x2.map(item => {
+                                            return (
+                                                <div>
+                                                    <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
+                                                    <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                                <div className="col-4">
+                                    <div className="react saved">
+                                        <img src={saved} alt="interactive" />
+                                        <p>{item.saved} Saved</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>)}
+                            )
+                        } else return null;
+                    } )}
                 </div>
                 <div className='col-4'>
                     <div className='article-rightcontent'>

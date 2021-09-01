@@ -58,7 +58,7 @@ export default class Lesson extends Component {
                                 </PopoverBody>
                             </UncontrolledPopover>*/}
                         </div>
-                    </div>) : <div>Bạn chưa kết bạn với bất kỳ ai</div>}
+                    </div>) : <div style={{margin: 50, fontSize: 30}}>Bạn chưa kết bạn với bất kỳ ai</div>}
                 </div>
             </div>
             <div className='col-4'>

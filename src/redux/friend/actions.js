@@ -15,12 +15,9 @@ export const unfriend = (id) => ({
     id 
 })
 
-export const acceptFriend = (item, index) => ({
+export const acceptFriend = (id) => ({
     type: ACCEPT,
-    payload: {
-        item: item,
-        index: index
-    }
+    id
 })
 
 export const getListRequestFriends = (data) => ({

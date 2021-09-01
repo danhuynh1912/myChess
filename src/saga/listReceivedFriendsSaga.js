@@ -4,8 +4,8 @@ import {GET_LIST_RECEIVED_FRIENDS} from "../redux/friend/actionType";
 import {FETCH_LIST_RECEIVED_FRIENDS} from "../redux/friend/actionType";
 
 const m = JSON.parse(localStorage.getItem("list"));
-// const url = `/api/sent-request?playerID=${m.playerID}`;
-const url = '';
+const url = `/api/sent-request?playerID=${m.playerID}`;
+// const url = '';
 
 function* setData() {
   const res = yield axios.get(url);

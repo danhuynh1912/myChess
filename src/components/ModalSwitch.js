@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Home from './Home';
-import Login from './Login';
 import LoginContainer from '../container/LoginContainer';
 import RegisterContainer  from '../container/RegisterContainer';
 import Admin from './Admin';
@@ -35,6 +34,7 @@ export default class ModalSwitch extends Component {
         <Route path="/">
             <Home />
         </Route>
+        
     </Switch>
         
     }

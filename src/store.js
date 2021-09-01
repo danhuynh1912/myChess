@@ -9,6 +9,7 @@ import userReducer from './redux/user/reducer';
 import lessonsReducer from './redux/lesson/reducer';
 import articlesReducer from "./redux/articles/reducer";
 import listRequestFriends from "./redux/friend/reducer";
+import historyReducer from "./redux/history/reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,6 +20,7 @@ const reducer = combineReducers({
     lessons: lessonsReducer,
     articles: articlesReducer,
     listRequestFriends: listRequestFriends,
+    history: historyReducer,
 })
 
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));

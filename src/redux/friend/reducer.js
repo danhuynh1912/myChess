@@ -11,7 +11,6 @@ const friendInitState = {
 }
 
 const friendsReducer = (state = friendInitState, action) => {
-    debugger;
     switch(action.type) {
         case GET_FRIEND: {
             return {
@@ -35,16 +34,17 @@ const friendsReducer = (state = friendInitState, action) => {
             }
         }
         case ACCEPT: {
-
+            let index = -1;
+            for (var j = 0; j < state.listRequestFriends.length; j++) {
+                if (state.listRequestFriends[j].playerID === action.id) {
+                    index = j;
+                }
+            }
             return {
                 ...state,
-                friendRequests: [
-                    ...state.friendRequests.slice(0, action.payload.index),
-                    ...state.friendRequests.slice(action.payload.index + 1)
-                ],
-                friends: [
-                    action.payload.item,
-                    ...state.friends
+                listRequestFriends: [
+                    ...state.listRequestFriends.slice(0, index),
+                    ...state.listRequestFriends.slice(index + 1)
                 ]
             }
         }

@@ -115,12 +115,7 @@ export default class Admin extends Component {
                     </div>
                 </div>
             </div>
-            <div className='col-4'>
-                <div className='article-rightcontent'>
-                    <FriendsListHome />
-                    <ContactUs />
-                </div>
-            </div>
+            
         </div>
     }
 }

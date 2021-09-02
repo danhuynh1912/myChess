@@ -85,7 +85,7 @@ export default class ChoseLevelAi extends Component {
                                     <div class="card card-body timecount"  onClick={() => this.getTime(item.time)}>
                                         <div class="content_head">{item.time}</div>
                                         <div class="content_sub">minute</div>
-                                        <img src={choseTime} />
+                                        <img className="chose-img" src={choseTime} />
                                     </div>
                                 </label>) }
                                 <div className="col-12">

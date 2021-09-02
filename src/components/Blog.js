@@ -25,6 +25,10 @@ export default class Blog extends Component {
             },
             blogList : [],
             playerList: [],
+            hoverLike: {
+                type: '',
+                id: -1
+            },
         }
         this.textInputRef = React.createRef();
     }
@@ -43,6 +47,26 @@ export default class Blog extends Component {
             })
         }
     }
+
+    hoverToggle = (type, id) => {
+        setTimeout(() => {
+            this.setState({
+                hoverLike: {
+                    type: type,
+                    id: id
+                },
+            })
+        }, 1000)
+    };
+
+    hoverToggleOff = () => {
+        this.setState({
+            hoverLike: {
+                type: '',
+                id: -1
+            },
+        })
+    };
 
     toggle = () => {
         this.setState({
@@ -182,7 +206,7 @@ export default class Blog extends Component {
 
     render() {
         const { users, friends } = this.props;
-        const { blogList} = this.state;
+        const { blogList, hoverLike} = this.state;
         console.log(blogList);
         const m = JSON.parse(localStorage.getItem("list"));
         debugger;
@@ -237,31 +261,37 @@ export default class Blog extends Component {
                             <hr />
                             <div className="interactive row">
                                 <div className="col-4">
-                                    <div className="react" onClick={() => this.likeBlogFunction(item.blogID, youLike)}>
+                                    <div className="react" onMouseLeave={this.hoverToggleOff} onMouseEnter={() => this.hoverToggle('like', item.blogID)} onClick={() => this.likeBlogFunction(item.blogID, youLike)}>
                                         <img src={youLike ? likedImg : like} alt="interactive" />
                                         <p>{x1.length} Likes</p>
-                                        {users.length > 0 && x1.map(item => {
-                                            return (
-                                                <div>
-                                                    <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
-                                                    <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
-                                                </div>
-                                            )
-                                        })}
+                                        {x1.length > 0 && <div className={`show-like${hoverLike.type === 'like' && hoverLike.id === item.blogID ? " showup" : ""}`}>
+                                            {users.length > 0 && x1.map(item => {
+                                                return (
+                                                    <div className="user-like">
+                                                        <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
+                                                        <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-4">
-                                    <div className="react comment" onClick={() => this.disLikeBlogFunction(item.blogID, youDislike)}>
+                                    <div className="react comment" onMouseLeave={this.hoverToggleOff} onMouseEnter={() => this.hoverToggle('dislike', item.blogID)} onClick={() => this.disLikeBlogFunction(item.blogID, youDislike)}>
                                         <img src={youDislike ? likedImg:like} alt="interactive" />
                                         <p>{x2.length} Dislikes</p>
-                                        {users.length > 0 && x2.map(item => {
-                                            return (
-                                                <div>
-                                                    <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
-                                                    <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
-                                                </div>
-                                            )
-                                        })}
+                                        {x2.length > 0 && <div className={`show-like${hoverLike.type === 'dislike' && hoverLike.id === item.blogID ? " showup" : ""}`}>
+                                            {users.length > 0 && x2.map(item => {
+                                                return (
+                                                    <div className="user-like">
+                                                        <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
+                                                        <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-4">

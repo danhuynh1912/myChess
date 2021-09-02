@@ -24,6 +24,7 @@ export default class LessonAdmin extends Component {
         }
         this.title = React.createRef();
         this.content = React.createRef();
+        this.content1 = React.createRef();
     }
 
     componentDidMount() {
@@ -67,6 +68,7 @@ export default class LessonAdmin extends Component {
 
     editLesson = () => {
         const {lessonID} = this.state;
+        debugger;
         axios.put('/api/edit-lesson', {lessonID: lessonID ,title: this.title.current.value, content: this.content.current.value, thumbnail: 'https://source.unsplash.com/300x225/?chess'})
         const {lesson} = this.state;
         lesson.find(item => item.lessonID === lessonID).title = this.title.current.value;
@@ -86,15 +88,8 @@ export default class LessonAdmin extends Component {
             lesson,
         })
     }
-
-
+    
     render() {
-        const games = [
-            { level: 'Level 1', result: 'win', moves: '26', date: 'Jun 29, 2021' },
-            { level: 'Level 3', result: 'lose', moves: '30', date: 'Jun 29, 2021' },
-            { level: 'Level 3', result: 'win', moves: '15', date: 'Jun 29, 2021' },
-            { level: 'Level 2', result: 'win', moves: '40', date: 'Jun 12, 2021' },
-        ]
         const {lesson} = this.state;
         return <div className='lesson row'>
             <div className='col-8'>
@@ -127,18 +122,17 @@ export default class LessonAdmin extends Component {
                 </div>
             </div>
 
-
             <Modal isOpen={this.state.modalAdd} toggle={this.toggleAdd} >
                 <ModalHeader>Add</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup>
                             <Label for="exampleEmail">Title</Label>
-                            <Input type="title" name="title" placeholder="with a placeholder" ref={this.title} />
+                            <Input type="title" name="title" placeholder="with a placeholder" innerRef={this.title} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword">Content</Label>
-                            <Input type="content" name="content" placeholder="password placeholder" ref={this.content} />
+                            <Input type="content" name="content" placeholder="password placeholder" innerRef={this.content} />
                         </FormGroup>
                     </Form>
                 </ModalBody>
@@ -156,11 +150,11 @@ export default class LessonAdmin extends Component {
                     <Form>
                         <FormGroup>
                             <Label for="exampleEmail">Title</Label>
-                            <Input type="title" name="title" placeholder="with a placeholder" ref={this.title} />
+                            <Input type="title" name="title" placeholder="with a placeholder" innerRef={this.title} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword">Content</Label>
-                            <Input type="content" name="content" placeholder="password placeholder" ref={this.content} />
+                            <Input type="content" name="content" placeholder="password placeholder" innerRef={this.content} />
                         </FormGroup>
                     </Form>
                 </ModalBody>

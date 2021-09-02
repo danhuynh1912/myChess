@@ -37,7 +37,7 @@ export default class Lesson extends Component {
         debugger;
         let listUsers = [];
         if(users.length > 0){
-            listUsers =  users.filter(item => item.email !== user.email);
+            listUsers =  users.filter(item => item.email !== user.email && item.point === 0);
         }
         debugger;
         return <div className='lesson row'>

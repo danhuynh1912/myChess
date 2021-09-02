@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 
-import ContactUs from './ContactUs';
-import FriendsListHome from './FriendsListHome';
 
-import addAdmin from '../static/images/addAdmin.svg';
 import removeAdmin from '../static/images/removeAdmin.svg';
-import updateAdmin from '../static/images/updateAdmin.svg';
 
 import '../static/History.css';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import axios from 'axios';
 
 export default class LessonAdmin extends Component {
@@ -96,12 +91,6 @@ export default class LessonAdmin extends Component {
             </div>
 
 
-            <div className='col-4'>
-                <div className='article-rightcontent'>
-                    <FriendsListHome />
-                    <ContactUs />
-                </div>
-            </div>
         </div>
     }
 }

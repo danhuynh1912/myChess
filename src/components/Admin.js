@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import NavAdmin from './NavAdmin';
-import AdminContent from './AdminContent';
+import AdminContentContainer from '../container/AdminContentContainer';
 import LessonAdminContainer from '../container/LessonAdminContainer';
 import ArticlesAdminContainer from '../container/ArticlesAdminContainer';
 import AccountAdminContainer from '../container/AccountAdminContainer';
@@ -24,7 +24,7 @@ export default class Admin extends Component {
             <div className='col-10'>
                 <Switch>
                 <Route path="/admin">
-                        <AdminContent />
+                        <AdminContentContainer />
                     </Route>
                     <Route path="/lesson-admin">
                         <LessonAdminContainer />

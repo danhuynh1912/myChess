@@ -15,12 +15,27 @@ import '../static/History.css';
 
 
 export default class Admin extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
+    
+    componentDidMount() {
+        this.props.fetchUsers();
+        this.props.fetchArticles();
+        this.props.fetchLessons();
+    }
+   
     render() {
+        const {users, articles, lessons} = this.props;
+        const usersUser = users.filter(item => item.point === 0);
+        debugger;
         const friends = [
             { pass: 'danhcon', id: 'Lê Hoàng Anh', email: 'danh@gmail.com', img: friend2, point: 1200 },
             { pass: 'condanh', id: 'Nguyễn Ngọc Dũng', email: 'tranganh@gmail.com', img: friend1, point: 2399 },
         ];
-        const lessons = [
+        const lessons1 = [
             { title: 'title 1', link: 'win' },
             { title: 'title 3', link: 'lose' },
             { title: 'title 3', link: 'win' },
@@ -31,19 +46,19 @@ export default class Admin extends Component {
                 <div className="row three-cards">
                     <div className="col-4">
                         <div className="cards-admin card-account">
-                            <h2>13</h2>
+                            <h2>{users && users.length}</h2>
                             <p>Accounts</p>
                         </div>
                     </div>
                     <div className="col-4">
                         <div className="cards-admin card-lesson">
-                            <h2>4</h2>
+                            <h2>{lessons && lessons.length}</h2>
                             <p>Lessons</p>
                         </div>
                     </div>
                     <div className="col-4">
                         <div className="cards-admin card-article">
-                            <h2>11</h2>
+                            <h2>{articles && articles.length}</h2>
                             <p>Articles</p>
                         </div>
                     </div>
@@ -56,18 +71,14 @@ export default class Admin extends Component {
                                 <th>Avt</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Pass</th>
-                                <th>Point</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {friends.length > 0 && friends.map((item, index) => <tr>
+                            {usersUser.length > 0 && usersUser.map((item, index) => <tr>
                                 <td><img src={item.img} width="30px" /></td>
-                                <td key={index}>{item.id}</td>
+                                <td key={index}>{item.name}</td>
                                 {/* <td key={index}>{item.result}</td> */}
                                 <td key={index}>{item.email}</td>
-                                <td key={index}>{item.pass}</td>
-                                <td key={index}>{item.point}</td>
                             </tr>)}
                         </tbody>
                     </Table>
@@ -84,11 +95,18 @@ export default class Admin extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {lessons.length > 0 && lessons.map((item, index) => <tr>
-                                        <td key={index}>{item.title}</td>
-                                        {/* <td key={index}>{item.result}</td> */}
-                                        <td key={index}>{item.link}</td>
-                                    </tr>)}
+                                    {lessons.length > 0 && lessons.map((item, index) => {
+                                        if(index >= 4) {
+                                            return null; 
+                                        } else
+                                        return (
+                                            <tr>
+                                            <td key={index}>{item.title}</td>
+                                            {/* <td key={index}>{item.result}</td> */}
+                                            <td key={index}>{item.content}</td>
+                                        </tr>
+                                        )
+                                    } )}
                                 </tbody>
                             </Table>
                         </div>
@@ -104,11 +122,18 @@ export default class Admin extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {lessons.length > 0 && lessons.map((item, index) => <tr>
-                                        <td key={index}>{item.title}</td>
-                                        {/* <td key={index}>{item.result}</td> */}
-                                        <td key={index}>{item.link}</td>
-                                    </tr>)}
+                                    {articles && articles.length > 0 && articles.map((item, index) => {
+                                        if(index >= 4) {
+                                            return null;
+                                        }
+                                        return (
+                                            <tr>
+                                            <td key={index}>{item.title}</td>
+                                            {/* <td key={index}>{item.result}</td> */}
+                                            <td key={index}>{item.link}</td>
+                                        </tr>
+                                        )
+                                    })}
                                 </tbody>
                             </Table>
                         </div>

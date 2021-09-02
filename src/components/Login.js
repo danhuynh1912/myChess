@@ -35,6 +35,7 @@ export default class Login extends Component {
     render() {
         const {user} = this.state;
         debugger;
+        const checkHref = user && user.point === 1 ? "/admin" : "/"
         return <div className="login">
             <div className="row">
                 <div className="col-6">
@@ -65,7 +66,7 @@ export default class Login extends Component {
                                 </label>
                                 <span>Remember me</span>
                             </div>
-                            <a onClick={this.checkLogin} href={user !== undefined ? "/" : "/login"}>
+                            <a onClick={this.checkLogin} href={user !== undefined ? checkHref : "/login"}>
                                 <button className="button-login">Login</button>
                             </a>
                             <p>Not registered yet? <Link to="/register">Create an Account</Link></p>

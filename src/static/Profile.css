@@ -59,3 +59,17 @@
     flex-direction: column;
     justify-items: center;
 }
+
+.update-pro input {
+    width: 50%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid #000;
+    background: none;
+    margin-bottom: 20px
+}
+
+.update-pro p {
+    margin: 0;
+    font-weight: 600;
+}

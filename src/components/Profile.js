@@ -16,16 +16,18 @@ export default class Profile extends Component {
         this.fullName = React.createRef();
     }
     editProfile = () => {
-        const user = JSON.parse(localStorage.getItem("list"));
-        const pw = this.password.current.value === "" ? user.password : this.password.current.value;
         this.setState({
             edit: !this.state.edit,
         })
+        const user = JSON.parse(localStorage.getItem("list"));
         if(!this.state.edit){
             debugger;
-            axios.put('/api/edit-player', {password: pw, name: this.fullName.current.value, point: user.point, email:user.email, img: user.img})
+            const pw = this.password.current.value === "" ? user.password : this.password.current.value;
+            if(this.fullName.current.value !== ""){
+                user.name = this.fullName.current.value;
+                axios.put('/api/edit-player', {password: pw, name: this.fullName.current.value, point: user.point, email:user.email, img: user.img})
+            }
             user.password = this.password.current.value;
-            user.name = this.fullName.current.value;
             localStorage.setItem("list", JSON.stringify(user));
         }
     }
@@ -47,16 +49,15 @@ export default class Profile extends Component {
                             <button style={{marginTop: 300}} className='intro-button' onClick={this.editProfile}>Edit Profile</button>
                         ) : (
                             <div style={{marginTop: 300, display: 'block'}}>
-                                <div>
+                                <div className="update-pro">
                                     <p>Password:</p>
                                     <input type="password" placeholder="your password" ref={this.password}/>
                                     <p>Confirm password</p>
                                     <input type="password" placeholder="your password" />
                                     <p>Name</p>
-                                    <input type="text" placeholder="your name" ref={this.fullName} value={m.name} />
-                                    <p>Change Avatar</p>
+                                    <input type="text" placeholder="your name" ref={this.fullName} />
                                 </div>
-                                <button style={{marginTop: 30}} className='intro-button' onClick={this.editProfile}>Done</button>
+                                <button style={{marginTop: 10, width: 200}} className='intro-button' onClick={this.editProfile}>Done</button>
                             </div>
                         )}
                     </div>

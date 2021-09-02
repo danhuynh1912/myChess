@@ -20,15 +20,18 @@ export default class LessonAdmin extends Component {
             modalAdd: false,
             modalUpdate: false,
             articles: [],
+            newsID: '',
         }
         this.title = React.createRef();
         this.link = React.createRef();
         this.content = React.createRef();
+        this.img = React.createRef();
     }
 
     toggleAdd = () => {
         this.setState({
             modalAdd: !this.state.modalAdd
+            
         })
     };
 
@@ -44,27 +47,64 @@ export default class LessonAdmin extends Component {
         }
     }
 
-    toggleUpdate = () => {
+    toggleUpdate = (newsID) => {
         this.setState({
-            modalUpdate: !this.state.modalUpdate
+            modalUpdate: !this.state.modalUpdate,
+            newsID: newsID,
         })
     };
 
     addArticles = () => {
-        
+        axios.post('/api/save-article', {
+            title: this.title.current.value, 
+            link: this.link.current.value, 
+            img: 'https://scontent.fhan5-2.fna.fbcdn.net/v/t1.15752-9/239953567_1016892239083688_6455115937789524183_n.png?_nc_cat=102&ccb=1-5&_nc_sid=ae9488&_nc_ohc=gsOgaWf30BAAX8OgLb-&_nc_ht=scontent.fhan5-2.fna&oh=64f102a393dd5aa6c2d6dab9026393f2&oe=614B8FA4', 
+            content: this.content.current.value
+        })
+        const {articles} = this.state;
+        articles.push({
+            title: this.title.current.value,
+            content: this.content.current.value,
+            link: this.link.current.value,
+        })
+        debugger;
+        this.setState({
+            articles,
+        })
     }
 
-    deleteArticles = () => {
+    editArticle = () => {
+        const {newsID} = this.state;
+        debugger;
+        axios.post("/api/edit-articles", {
+            newsID: newsID,
+            title: this.title.current.value, 
+            link: this.link.current.value, 
+            img: 'https://scontent.fhan5-2.fna.fbcdn.net/v/t1.15752-9/239953567_1016892239083688_6455115937789524183_n.png?_nc_cat=102&ccb=1-5&_nc_sid=ae9488&_nc_ohc=gsOgaWf30BAAX8OgLb-&_nc_ht=scontent.fhan5-2.fna&oh=64f102a393dd5aa6c2d6dab9026393f2&oe=614B8FA4', 
+            content: this.content.current.value
+        })
+        const {articles} = this.state;
+        articles.find(item => item.newsID === newsID).title = this.title.current.value;
+        articles.find(item => item.newsID === newsID).link = this.link.current.value;
+        articles.find(item => item.newsID === newsID).content = this.content.current.value;
+        debugger;
+        this.setState({
+            articles,
+        })
+    }
+
+    deleteArticles = (newsID) => {
+        axios.delete('/api/delete-article', {data: {newsID: newsID}})
+        const {articles} = this.state;
+        const indexremove = articles.findIndex(item => item.newsID === newsID)
+        articles.splice(indexremove, 1);
+        this.setState({
+            articles,
+        })
     }
 
 
     render() {
-        const games = [
-            { level: 'Level 1', result: 'win', moves: '26', date: 'Jun 29, 2021' },
-            { level: 'Level 3', result: 'lose', moves: '30', date: 'Jun 29, 2021' },
-            { level: 'Level 3', result: 'win', moves: '15', date: 'Jun 29, 2021' },
-            { level: 'Level 2', result: 'win', moves: '40', date: 'Jun 12, 2021' },
-        ]
         const {articles} = this.state;
         return <div className='lesson row'>
             <div className='col-8'>
@@ -83,7 +123,7 @@ export default class LessonAdmin extends Component {
                                 <td key={index}>{item.link}</td>
                                 <td key={index}>{item.content}</td>
                                 <td key={index} className="action-admin">
-                                    <img src={updateAdmin} onClick={this.toggleUpdate} />
+                                    <img alt="" src={updateAdmin} onClick={() => this.toggleUpdate(item.newsID)} />
                                     <img alt="" src={removeAdmin} onClick={() => this.deleteArticles(item.newsID)} />
                                 </td>
                             </tr>)}
@@ -104,21 +144,21 @@ export default class LessonAdmin extends Component {
                     <Form>
                         <FormGroup>
                             <Label for="exampleEmail">Title</Label>
-                            <Input type="Title" name="Title" id="Title" placeholder="Title" ref={this.title} />
+                            <Input type="Title" name="Title" id="Title" placeholder="Title" innerRef={this.title} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword">Link</Label>
-                            <Input type="Link" name="Link" id="Link" placeholder="Link" ref={this.link} />
+                            <Input type="Link" name="Link" id="Link" placeholder="Link" innerRef={this.link} />
                         </FormGroup>
                        
                         <FormGroup>
                             <Label for="exampleText">Content</Label>
-                            <Input type="Content" name="Content" id="Content" ref={this.content} />
+                            <Input type="Content" name="Content" id="Content" innerRef={this.content} />
                         </FormGroup>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="postbutton" color="primary" onClick={this.addBlogFunction}>Post</Button>{' '}
+                    <Button className="postbutton" color="primary" onClick={this.addArticles}>Post</Button>{' '}
                     <Button color="secondary" onClick={this.toggleAdd}>Cancel</Button>
                 </ModalFooter>
             </Modal>
@@ -131,26 +171,23 @@ export default class LessonAdmin extends Component {
                     <Form>
                         <FormGroup>
                             <Label for="exampleEmail">Title</Label>
-                            <Input type="Title" name="Title" id="Title" placeholder="Title" ref={this.title} />
+                            <Input type="Title" name="Title" id="Title" placeholder="Title" innerRef={this.title} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword">Link</Label>
-                            <Input type="Link" name="Link" id="Link" placeholder="Link" ref={this.link} />
+                            <Input type="Link" name="Link" id="Link" placeholder="Link" innerRef={this.link} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="exampleText">Content</Label>
-                            <Input type="Content" name="Content" placeholder="Content" id="Content" ref={this.content} />
+                            <Input type="Content" name="Content" placeholder="Content" innerRef={this.content} />
                         </FormGroup>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="postbutton" color="primary" onClick={this.addArticles}>Post</Button>{' '}
+                    <Button className="postbutton" color="primary" onClick={this.editArticle}>Post</Button>{' '}
                     <Button color="secondary" onClick={this.toggleUpdate}>Cancel</Button>
                 </ModalFooter>
             </Modal>
-
-
-           
         </div>
     }
 }

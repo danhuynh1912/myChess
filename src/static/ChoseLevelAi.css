@@ -109,13 +109,13 @@
     transition: border 0.3s;
   }
 
-  .timecount img {
+  .timecount .chose-img {
     opacity: 0;
     position: absolute;
     pointer-events: none;
   }
   
-  .card-input-element:checked + .timecount img {
+  .card-input-element:checked + .timecount .chose-img {
     opacity: 1;
     position: absolute;
     width: 15px;

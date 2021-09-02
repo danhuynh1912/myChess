@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import '../static/Login.css';
 
+import choseTime from '../static/images/choseTime.svg';
+
+import {
+    Link
+} from "react-router-dom";
 import axios from 'axios';
 
 export default class Registation extends Component {
@@ -106,17 +111,16 @@ export default class Registation extends Component {
                             <input type="password" placeholder="your password" />
                             <p>Full Name</p>
                             <input type="text" placeholder="your name" ref={this.fullName} />
-                            <div>Choose Avatar</div>
-                            <div class="col-sm-6">
+                            <div class="">
                             <div class="card h-100">
-                                <div class="card-body row">
-                                    <h5 class="fw-600">Choose Avatar</h5>
+                                <div style={{padding: '0 1rem'}} class="card-body row">
+                                    <p style={{padding: 0}} class="fw-600">Choose Avatar</p>
                                     <hr class="style-1 mb-4" />
-                                    {arrImg.map((item, index) => <label class="card-radio-btn col-6" >
+                                    {arrImg.map((item, index) => <label class="card-radio-btn col-3" >
                                         <input type="radio" name="demo" class="card-input-element d-none" value={item} />
-                                        <button onClick={() => this.chooAvt(index)}><img style={{width: 50, height: 50, margin: 10}} src={item} alt="#" /></button>
-                                        <div class="card card-body timecount">
-                                            <button onClick={() => this.chooAvt(index)}><img style={{width: 50, height: 50, margin: 10}} src={item} alt="#" /></button>
+                                        <div class="card card-body timecount" style={{padding: 0}}>
+                                            <img onClick={() => this.chooAvt(index)} style={{width: '100%', height: '100%', borderRadius: 5, objectFit: 'cover'}} src={item} alt="#" />
+                                            <img style={{top:- 10, right: -10}} className="chose-img" src={choseTime} />
                                         </div>
                                     </label>) }
                                 </div>
@@ -125,6 +129,7 @@ export default class Registation extends Component {
                             <a onClick={this.register} href={checkRegistration === true ? "/login" : "/register"}>
                                 <button className="regis-button">Registation</button>
                             </a>
+                            <p>Not registered yet? <Link to="/login">Back to Login</Link></p>
                            
                         </div>
                     </div>

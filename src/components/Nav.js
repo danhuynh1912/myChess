@@ -27,13 +27,22 @@ import {
     Link
 } from "react-router-dom";
 
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 export default class Nav extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPage: ""
+            currentPage: "",
+            modal: false
         }
     }
+
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        })
+    };
 
     activePage(value){
         this.setState({
@@ -121,10 +130,20 @@ export default class Nav extends Component {
                         </Link>
                     </li>
                     <li>
-                        <Link onClick={this.clearStorage} to="/login">
+                        <Link onClick={this.toggle}>
                             <img src={logout} alt=""/>
                             <span>Sign out</span>
                         </Link>
+                        <Modal isOpen={this.state.modal} toggle={this.toggle} >
+                            <ModalHeader>Sign out</ModalHeader>
+                            <ModalBody>
+                                <p>Bạn có chắc chắn muốn đăng xuất?</p>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button className="postbutton" color="primary" onClick={this.clearStorage}><Link to="/login" alt="#" style={{color: "white"}}>Ok</Link></Button>{' '}
+                                <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
                     </li>
                 </ul>
             </nav>

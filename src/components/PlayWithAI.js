@@ -1,18 +1,8 @@
 import React, { Component } from 'react';
 import '../static/PlayWithHuman.css';
 
-import opponentAvatar from '../static/images/opponentAvatar.jpeg'
-import avt from '../static/images/avt.jpg'
-import seehistory from '../static/images/seehistory.svg'
-import setup from '../static/images/setup.svg'
-import back1 from '../static/images/back1.svg'
-
 import Board from './Board';
 import TimeCountContainer from '../container/TimeCountContainer';
-
-import {
-    Link
-} from "react-router-dom";
 
 export default class PlayWithAI extends Component {
     constructor(props) {
@@ -52,7 +42,6 @@ export default class PlayWithAI extends Component {
     }
 
     render() {
-        const { aiGames } = this.props;
         const { yourMin, yourSec } = this.state;
         return <div className='aiplay'>
             <div className='row'>

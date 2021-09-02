@@ -7,17 +7,28 @@ import FriendsListHome from './FriendsListHome';
 import '../static/History.css';
 import axios from 'axios';
 
+import deleteBlog from '../static/images/delete.svg';
+
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 export default class History extends Component {
     constructor(props) {
         super(props);
         this.state = {
             history: [],
+            modal: false
         }
     }
 
     componentDidMount() {
         this.props.fetchHistory();
     }
+
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        })
+    };
 
     removeHistory = (gameID) => {
         axios.delete("/api/delete-aigame", {data: {gameID: gameID}})
@@ -49,6 +60,7 @@ export default class History extends Component {
                                 <th>Result</th>
                                 <th>Time</th>
                                 <th>Date</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +77,17 @@ export default class History extends Component {
                                 <td key={index}>{new Date(item.createdAt).toLocaleString()}</td>
                                 <td>
                                     <div className="list-button">
-                                        <button onClick={() => this.removeHistory(item.gameID)}>X</button>
+                                        <img style={{width: 20, height: 20, borderRadius: 0, cursor: 'pointer'}} onClick={this.toggle} src={deleteBlog}/>
+                                        <Modal isOpen={this.state.modal} toggle={this.toggle} >
+                                            <ModalHeader>Delete history</ModalHeader>
+                                            <ModalBody>
+                                                <p>Bạn có chắc chắn muốn xóa trận đấu này?</p>
+                                            </ModalBody>
+                                            <ModalFooter>
+                                                <Button className="postbutton" color="primary" onClick={() => this.removeHistory(item.gameID)}><a href="/friends" alt="#" style={{color: "white"}}>Ok</a></Button>{' '}
+                                                <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                                            </ModalFooter>
+                                        </Modal>
                                     </div>
                                 </td>
                             </tr>)}

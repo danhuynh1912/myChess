@@ -46,7 +46,7 @@ export default class Profile extends Component {
                             </div>
                         </div>
                         {this.state.edit ? (
-                            <button style={{marginTop: 300}} className='intro-button' onClick={this.editProfile}>Edit Profile</button>
+                            <button style={{marginTop: 300, width: 200}} className='intro-button' onClick={this.editProfile}>Edit Profile</button>
                         ) : (
                             <div style={{marginTop: 300, display: 'block'}}>
                                 <div className="update-pro">

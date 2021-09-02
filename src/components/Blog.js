@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import BackdropFilter from 'react-backdrop-filter';
 import { nanoid } from 'nanoid'
 import '../static/Blog.css';
 import avt from '../static/images/avt1.jpeg';
 import like from '../static/images/like.svg';
 import likedImg from '../static/images/liked.svg';
+import deleteBlog from '../static/images/delete.svg';
 import saved from '../static/images/saved.svg';
 
 import ContactUs from './ContactUs';
@@ -18,6 +20,7 @@ export default class Blog extends Component {
         super(props);
         this.state = {
             modal: false,
+            modalRemove: false,
             user: {
                 userId: 'danhuynh',
                 avt: avt,
@@ -71,6 +74,12 @@ export default class Blog extends Component {
     toggle = () => {
         this.setState({
             modal: !this.state.modal
+        })
+    };
+
+    toggleRemove = () => {
+        this.setState({
+            modalRemove: !this.state.modalRemove
         })
     };
 
@@ -252,7 +261,17 @@ export default class Blog extends Component {
                                     {users.find(m => m.playerID === item.playerID) && <p>{users.find(m => m.playerID === item.playerID).createdAt}</p>}
                                 </div>
                                 <div className="list-button">
-                                    <button onClick={() => this.removeBlog(item.blogID)}>X</button>
+                                    <img style={{width: 20, height: 20, borderRadius: 0, cursor: 'pointer'}} onClick={this.toggleRemove} src={deleteBlog}/>
+                                    <Modal isOpen={this.state.modalRemove} toggle={this.toggleRemove} >
+                                        <ModalHeader>Create post</ModalHeader>
+                                        <ModalBody>
+                                            <p>Ban co chac muon xoa?</p>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button className="postbutton" color="primary" onClick={() => this.removeBlog(item.blogID)}><a href="/blog" alt="#" style={{color: "white"}}>Ok</a></Button>{' '}
+                                            <Button color="secondary" onClick={this.toggleRemove}>Cancel</Button>
+                                        </ModalFooter>
+                                    </Modal>
                                 </div>
                             </div>
                             <div className="user-content">
@@ -264,16 +283,16 @@ export default class Blog extends Component {
                                     <div className="react" onMouseLeave={this.hoverToggleOff} onMouseEnter={() => this.hoverToggle('like', item.blogID)} onClick={() => this.likeBlogFunction(item.blogID, youLike)}>
                                         <img src={youLike ? likedImg : like} alt="interactive" />
                                         <p>{x1.length} Likes</p>
-                                        {x1.length > 0 && <div className={`show-like${hoverLike.type === 'like' && hoverLike.id === item.blogID ? " showup" : ""}`}>
+                                        {x1.length > 0 && <BackdropFilter filter={"blur(10px)"} className={`show-like${hoverLike.type === 'like' && hoverLike.id === item.blogID ? " showup" : ""}`}>
                                             {users.length > 0 && x1.map(item => {
                                                 return (
                                                     <div className="user-like">
                                                         <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
-                                                        <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
+                                                        <div className="name-user">{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
                                                     </div>
                                                 )
                                             })}
-                                        </div>
+                                        </BackdropFilter>
                                         }
                                     </div>
                                 </div>
@@ -286,7 +305,7 @@ export default class Blog extends Component {
                                                 return (
                                                     <div className="user-like">
                                                         <img className="friend-avtimg" src={users.find(m => m.playerID === item.Reacts.playerID).img} alt="" />
-                                                        <div>{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
+                                                        <div className="name-user">{users.find(m => m.playerID === item.Reacts.playerID).name}</div>
                                                     </div>
                                                 )
                                             })}

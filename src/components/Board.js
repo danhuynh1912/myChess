@@ -382,7 +382,6 @@ export default class Board extends Component {
 
     choosePieceToMove(pos, pie, pieColor, x, y, value) {
         const { willMove, allSquare, whiteTurn } = this.state;
-        const { runTime } = this.props
         if (((!willMove.ready && pie !== '')
             || (pieColor === willMove.color && pos !== willMove.position && pieColor !== ''))
         ) {

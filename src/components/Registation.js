@@ -26,7 +26,10 @@ export default class Registation extends Component {
         this.props.fetchUsers();
     }
 
-    register = async () => {
+    register = () => {
+        this.setState({
+            checkRegistration: false,
+        })
         const {users} = this.props;
         const {avt} = this.state;
         const userExisted = users.find(x => x.email === this.email.current.value);
@@ -36,9 +39,9 @@ export default class Registation extends Component {
                 alert("Vui lòng điền đẩy đủ thông tin !")
                 debugger;
             } else {
-                await axios.post('/api/create-player', {password: this.password.current.value, name: this.fullName.current.value, point: '0', email: this.email.current.value, img: avt});
+                axios.post('/api/create-player', {password: this.password.current.value, name: this.fullName.current.value, point: '0', email: this.email.current.value, img: avt});
                 this.setState({
-                    checkRegistration: !this.state.checkRegistration,
+                    checkRegistration: true,
                 })
                 debugger;
             }

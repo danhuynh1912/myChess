@@ -34,8 +34,6 @@ export default class ModalSwitch extends Component {
         <Route path="/">
             <Home />
         </Route>
-        
     </Switch>
-        
     }
 }

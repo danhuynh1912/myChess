@@ -663,9 +663,8 @@ export default class Board extends Component {
                             />
                         })}
                     </div>
-
                 ))}
-                {check === '' && <div className="result-notify">
+                {check !== '' && <div className="result-notify">
                     <BackdropFilter className="result-notify-1" filter={"blur(10px)"}>
                         <img src={check === 'Com' ? winnerImg : loseImg} />
                         <h1>{check === 'Com' ? 'WIN' : 'LOSE'}</h1>

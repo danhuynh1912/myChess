@@ -77,14 +77,14 @@ export default class History extends Component {
                                 <td key={index}>{new Date(item.createdAt).toLocaleString()}</td>
                                 <td>
                                     <div className="list-button">
-                                        <img style={{width: 20, height: 20, borderRadius: 0, cursor: 'pointer'}} onClick={this.toggle} src={deleteBlog}/>
+                                        <img alt="" style={{width: 20, height: 20, borderRadius: 0, cursor: 'pointer'}} onClick={this.toggle} src={deleteBlog}/>
                                         <Modal isOpen={this.state.modal} toggle={this.toggle} >
                                             <ModalHeader>Delete history</ModalHeader>
                                             <ModalBody>
                                                 <p>Bạn có chắc chắn muốn xóa trận đấu này?</p>
                                             </ModalBody>
                                             <ModalFooter>
-                                                <Button className="postbutton" color="primary" onClick={() => this.removeHistory(item.gameID)}><a href="/friends" alt="#" style={{color: "white"}}>Ok</a></Button>{' '}
+                                                <Button className="postbutton" color="primary" onClick={() => this.removeHistory(item.gameID)}><a href="/history" alt="#" style={{color: "white"}}>Ok</a></Button>{' '}
                                                 <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                                             </ModalFooter>
                                         </Modal>

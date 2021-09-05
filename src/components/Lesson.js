@@ -83,7 +83,7 @@ export default class Lesson extends Component {
                                 </div>
                                 <div class="card-flap flap2">
                                     <div class="card-actions">
-                                        <a href="#m" class="btn">Learn now</a>
+                                        <a href="https://www.chess.com/lessons/playing-the-game" class="btn">Learn now</a>
                                     </div>
                                 </div>
                             </div>

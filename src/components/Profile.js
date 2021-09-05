@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import '../static/Profile.css';
 
 import ContactUs from './ContactUs';
@@ -25,7 +25,12 @@ export default class Profile extends Component {
             const pw = this.password.current.value === "" ? user.password : this.password.current.value;
             if(this.fullName.current.value !== ""){
                 user.name = this.fullName.current.value;
-                axios.put('/api/edit-player', {password: pw, name: this.fullName.current.value, point: user.point, email:user.email, img: user.img})
+                axios.put('/api/edit-player', {
+                    password: pw, 
+                    name: this.fullName.current.value, 
+                    point: user.point, 
+                    email:user.email, 
+                    playerID: user.playerID})
             }
             user.password = this.password.current.value;
             localStorage.setItem("list", JSON.stringify(user));

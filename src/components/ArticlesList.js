@@ -4,18 +4,6 @@ import '../static/ArticlesList.css';
 import ContactUs from './ContactUs';
 import FriendsListHome from './FriendsListHome';
 
-import article1 from '../static/images/article1.png';
-import article2 from '../static/images/article2.png';
-import article3 from '../static/images/article3.png';
-import article4 from '../static/images/article4.png';
-import article5 from '../static/images/article5.png';
-import article6 from '../static/images/article6.png';
-import article7 from '../static/images/article7.png';
-import article8 from '../static/images/article8.png';
-import article9 from '../static/images/article9.png';
-import article10 from '../static/images/article10.png';
-
-
 export default class ArticlesList extends Component {
     constructor(props) {
         super(props);

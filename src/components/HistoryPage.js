@@ -24,6 +24,13 @@ export default class History extends Component {
         this.props.fetchHistory();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.history !== this.props.history) {
+            this.setState({history: this.props.history});
+        }
+    }
+
+
     toggle = () => {
         this.setState({
             modal: !this.state.modal
@@ -36,12 +43,6 @@ export default class History extends Component {
         const indexRemove = history.findIndex(item => item.gameID === gameID);
         indexRemove !== -1 && history.splice(indexRemove, 1);
         this.setState({history: history});
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if(prevState.history !== this.props.history) {
-            this.setState({history: this.props.history});
-        }
     }
 
     render() {

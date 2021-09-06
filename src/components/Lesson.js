@@ -10,7 +10,7 @@ export default class Lesson extends Component {
         super();
         this.state = {
             isShowing: false,
-            levels: [],
+            lesson: [],
         }
     }
 
@@ -19,16 +19,16 @@ export default class Lesson extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevState.levels !== this.props.lessons){
+        if(prevState.lesson !== this.props.lessons){
             this.setState({
-                levels: this.props.lessons,
+                lesson: this.props.lessons,
             })
         }
     }
 
     changeAllToUnshow = (itemShowing) => {
-        const { levels } = this.state;
-        levels.forEach(item => {
+        const { lesson } = this.state;
+        lesson.forEach(item => {
             if( item.show && item !== itemShowing) {
                 item.show = false
             }
@@ -36,33 +36,31 @@ export default class Lesson extends Component {
     }
 
     showInfomation = (index) => {
-        const { levels, showing } = this.state;
+        const { lesson, showing } = this.state;
         let _showing = showing;
         _showing = true;
-        if(!levels[index].show) {
-            this.changeAllToUnshow(levels[index].show);
+        if(!lesson[index].show) {
+            this.changeAllToUnshow(lesson[index].show);
         }
         else {
             _showing = false
         }
         this.setState({
             showing: _showing,
-            levels: [
-                ...levels.slice(0, index),
-                { ...levels[index], show: !levels[index].show },
-                ...levels.slice(index + 1)
+            lesson: [
+                ...lesson.slice(0, index),
+                { ...lesson[index], show: !lesson[index].show },
+                ...lesson.slice(index + 1)
             ]
         })
     }
 
     render() {
-        const { levels, showing } = this.state;
-        debugger;
+        const { lesson, showing } = this.state;
         return <div className='lesson row'>
             <div className='col-8'>
                 <div class={showing? "cards showing row":"cards row"}>
-
-                    { levels.length > 0 && levels.map((item, index) => <div className='col-6'>
+                    { lesson.length > 0 && lesson.map((item, index) => <div className='col-6'>
                         <div class={item.show? "card show":"card"}>
                             <div class="card__image-holder">
                                 <img class="card__image" src={item.thumbnail} alt="wave" />

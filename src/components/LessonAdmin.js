@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 
-import ContactUs from './ContactUs';
-import FriendsListHome from './FriendsListHome';
-
 import addAdmin from '../static/images/addAdmin.svg';
 import removeAdmin from '../static/images/removeAdmin.svg';
 import updateAdmin from '../static/images/updateAdmin.svg';
 
 import '../static/History.css';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
 
 export default class LessonAdmin extends Component {
@@ -24,7 +21,6 @@ export default class LessonAdmin extends Component {
         }
         this.title = React.createRef();
         this.content = React.createRef();
-        this.content1 = React.createRef();
     }
 
     componentDidMount() {
@@ -60,7 +56,6 @@ export default class LessonAdmin extends Component {
             content: this.content.current.value,
             thumbnail: 'https://source.unsplash.com/300x225/?chess',
         })
-        debugger;
         this.setState({
             lesson,
         })
